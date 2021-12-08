@@ -76,9 +76,9 @@ An easy way to derive the gNB ID is the following. From the `setup-scripts` dire
 - Connect the RAN node through the E2 termination as explained [here](https://github.com/wineslab/colosseum-scope-e2)
 - The RAN node should connect to the near-real-time RIC and the gNB ID should appear in the `e2term` logs (see example below)
 
-```
-TODO insert sample gNB ID from e2term logs
-```
+  ```
+  TODO insert sample gNB ID from e2term logs
+  ```
 
 ### Using the provided sample xApp
 

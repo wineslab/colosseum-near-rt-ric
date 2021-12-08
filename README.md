@@ -42,7 +42,7 @@ root
 |  └──xapp-bs-connector
 ```
 
-### quick start
+### Quick start
 
 From the `setup-scripts` directory:
 - Build, configure, and start the near-real-time RIC Docker containers: `./setup-ric.sh`
@@ -68,7 +68,7 @@ This directory contains the implementations of the near-real-time RIC Docker con
 - `e2mgr`: implementation of the E2 manager (`e2mgr`) and of the routing manager simulator (`e2rtmansim`) container
 - `sample-xapp`, `xapp-bs-connector`: implementation of the sample xApp provided in this repository and components to connect to the near-real-time RIC and [SCOPE](https://github.com/wineslab/colosseum-scope) RAN environment
 
-### getting the gNB ID
+### Getting the gNB ID
 
 An easy way to derive the gNB ID is the following. From the `setup-scripts` directory:
 - Start the near-real-time RIC Docker containers: `./setup-ric.sh`
@@ -76,3 +76,14 @@ An easy way to derive the gNB ID is the following. From the `setup-scripts` dire
 - Connect the RAN node through the E2 termination as explained [here](https://github.com/wineslab/colosseum-scope-e2)
 - The RAN node should connect to the near-real-time RIC and the gNB ID should appear in the `e2term` logs (see example below)
 
+```
+TODO insert sample gNB ID from e2term logs
+```
+
+### Using the provided sample xApp
+
+The sample xApp provided in this repository connects to the [SCOPE](https://github.com/wineslab/colosseum-scope) RAN environment through the following [E2 termination](https://github.com/wineslab/colosseum-scope-e2).
+After the near-real-time RIC has successfully started, the DU connected to it, and the xApp has been properly configured and started (see "Quick start" section above):
+- Enter the xApp docker container (named `sample-xapp-24` by default): `docker exec -it sample-xapp-24`
+- Move to the right directory inside the Docker container: `cd /home/sample-xapp`
+- Start the xApp: `./run_xapp.sh`. This script will open a socket between the sample script in the `sample-xapp` directory (which by defaults prints the data received from the RAN node) and the base station connector of the `xapp-bs-connector` directory. Then, the xApp will subscribe to the RAN node specified at contianer startup time through the gNB ID, and send a RIC Indication Message that triggers a data report from the RAN node with the periodicity of 1 second.

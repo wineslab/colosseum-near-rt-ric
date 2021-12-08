@@ -1,0 +1,44 @@
+#   Copyright (c) 2019 AT&T Intellectual Property.
+#   Copyright (c) 2019 Nokia.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+#
+#   This source code is part of the near-RT RIC (RAN Intelligent Controller)
+#   platform project (RICP).
+#
+
+FROM ubuntu:latest
+
+# Install redis tools & golang & git
+RUN apt-get update && \
+    apt install -y redis-tools && \
+    apt install -y git && \
+    apt install -y wget && \
+    wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz && \
+    tar -xvf go1.11.4.linux-amd64.tar.gz && \
+    mv go /usr/local && \
+    apt-get clean
+
+# Copy sourcefiles
+COPY ./testapplication ./testapplication
+
+# Install go testapplication
+RUN export GOROOT=/usr/local/go && \
+    export GOPATH=$HOME/Projects/Proj1 && \
+    export PATH=$GOPATH/bin:$GOROOT/bin:$PATH && \
+    go get github.com/go-redis/redis && \
+    go build /testapplication/go/testapp.go
+
+# Keep the container alive
+ENTRYPOINT ["tail", "-f", "/dev/null"]

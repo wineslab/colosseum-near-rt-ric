@@ -1,0 +1,63 @@
+---
+project: 'ric_plt_e2'
+project_creation_date: '2019-11-08'
+project_category: ''
+lifecycle_state: 'Incubation'
+project_lead: &oran_ric_plt_e2_ptl
+    name: 'Thoralf Czichy'
+    email: 'thoralf.czichy@nokia.com'
+    id: 'czichy'
+    company: 'Nokia'
+    timezone: 'America/New_York'
+primary_contact: *oran_ric_plt_e2_ptl
+issue_tracking:
+    type: 'jira'
+    url: 'https://jira.o-ran-sc.org/projects/'
+    key: 'ric_plt_e2'
+mailing_list:
+    type: 'groups.io'
+    url: 'technical-discuss@lists.o-ran-sc.org'
+    tag: '[]'
+realtime_discussion:
+    type: 'irc'
+    server: 'freenode.net'
+    channel: '#oran'
+meetings:
+    - type: 'gotomeeting+irc'
+      agenda: 'https://wiki.o-ran-sc.org/display/'
+      url: ''
+      server: 'freenode.net'
+      channel: '#oran'
+      repeats: ''
+      time: ''
+repositories:
+    - ric-plt/e2
+committers:
+    - <<: *oran_ric_plt_e2_ptl
+    - name: 'Adi Enzel'
+      email: 'aa7133@att.com'
+      company: 'att'
+      id: 'adienzel'
+      timezone: 'Unknown/Unknown'
+    - name: 'Shuky Har-Noy'
+      email: 'shuky.har-noy@intl.att.com'
+      company: 'intl.att'
+      id: 'ss412g'
+      timezone: 'Unknown/Unknown'
+    - name: 'Yaki Ratz'
+      email: 'yaki.ratz@gmail.com'
+      company: 'gmail'
+      id: 'yakiratz'
+      timezone: 'Unknown/Unknown'
+    - name: 'Hila Anina'
+      email: 'hanina@intl.att.com'
+      company: 'intl.att'
+      id: 'hanina'
+      timezone: 'Unknown/Unknown'
+tsc:
+    # yamllint disable rule:line-length
+    approval: 'missing'
+    changes:
+        - type: ''
+          name: ''
+          link: ''

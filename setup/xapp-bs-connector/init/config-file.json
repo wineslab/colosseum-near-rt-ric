@@ -1,0 +1,49 @@
+ {
+        "xapp_name": "hwxapp",
+        "version": "1.0.0",
+        "containers": [
+            {
+                "name": "hwxapp",
+                "image": {
+                    "registry": "nexus3.o-ran-sc.org:10002",
+                    "name": "o-ran-sc/ric-app-hw",
+                    "tag": "1.0.6"
+               	}
+            }
+        ],
+        "messaging": {
+            "ports": [
+                {
+                    "name": "rmr-data",
+                    "container": "hwxapp",
+                    "port": 4560,
+                    "rxMessages": [ 
+						"RIC_SUB_RESP", 
+						"A1_POLICY_REQ", "RIC_HEALTH_CHECK_REQ" 
+                    ],
+                    "txMessages": [ "RIC_SUB_REQ", "A1_POLICY_RESP", "A1_POLICY_QUERY", "RIC_HEALTH_CHECK_RESP" ],
+                    "policies": [1],
+                    "description": "rmr receive data port for HWxapp"
+                },
+                {
+                    "name": "rmr-route",
+                    "container": "hwxapp",
+                    "port": 4561,
+                    "description": "rmr route port for hwxapp"
+                }
+            ]
+        },
+        "rmr": {
+            "protPort": "tcp:4560",
+            "maxSize": 2072,
+            "numWorkers": 1,
+            "txMessages": [
+                "RIC_SUB_REQ", "A1_POLICY_RESP", "A1_POLICY_QUERY", "RIC_HEALTH_CHECK_RESP"
+            ],
+            "rxMessages": [
+                "RIC_SUB_RESP", 
+				"A1_POLICY_REQ", "RIC_HEALTH_CHECK_REQ"              
+            ],
+	    "policies": [1]
+        }
+  }

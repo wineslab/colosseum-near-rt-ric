@@ -1,0 +1,8 @@
+.DS_Store
+._*
+*.bkp
+
+# created by setup-ric.sh script
+setup/router.txt
+setup/e2term_config.conf
+

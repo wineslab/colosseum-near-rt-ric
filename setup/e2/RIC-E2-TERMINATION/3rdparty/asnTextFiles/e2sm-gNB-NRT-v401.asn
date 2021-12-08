@@ -1,0 +1,359 @@
+-- ASN1START
+-- **************************************************************
+-- E2SM-gNB-NRT
+-- Information Element Definitions
+-- 
+-- **************************************************************
+
+E2SM-gNB-NRT-IEs {
+iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 28458 exp(99) mobileDomain (0) ric (21) modules (3) e2sm (3) version1 (1) e2sm-gNB-NRT-IEs (3) }
+
+DEFINITIONS AUTOMATIC TAGS ::= 
+
+BEGIN
+
+-- **************************************************************
+--
+-- copied from X2AP IEs v15.4.0
+-- note: ie-Extensions removed
+-- **************************************************************
+
+
+
+ECGI ::= SEQUENCE {
+	pLMN-Identity				PLMN-Identity,
+	eUTRANcellIdentifier		EUTRANCellIdentifier,
+	...
+}
+EUTRANCellIdentifier ::= BIT STRING (SIZE (28))
+
+NRCellIdentifier ::= BIT STRING (SIZE (36))
+
+NRCGI ::= SEQUENCE {
+	pLMN-Identity				PLMN-Identity,
+	nRcellIdentifier			NRCellIdentifier,
+	...
+}
+
+PLMN-Identity ::= OCTET STRING (SIZE(3))
+
+-- **************************************************************
+--
+-- Lists
+--
+-- **************************************************************
+
+maxofCellinRAN							INTEGER ::= 16384
+maxNoOfNeighbours						INTEGER ::= 1024
+maxofRANParameters						INTEGER ::= 255
+maxofRICstyles							INTEGER ::= 63
+
+-- E2 Service model IEs
+
+-- ---------------------------------------------------
+-- Event Trigger Definition OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-gNB-NRT-EventTriggerDefinition IE
+E2SM-gNB-NRT-EventTriggerDefinition ::= CHOICE{
+	eventDefinition-Format1		E2SM-gNB-NRT-EventTriggerDefinition-Format1,
+	...
+}
+
+-- E2SM-gNB-NRT-eventTriggerDefinition IE Format 1
+E2SM-gNB-NRT-EventTriggerDefinition-Format1 ::= SEQUENCE{
+	triggerNature						NRT-TriggerNature,
+	...
+}
+
+-- ---------------------------------------------------
+-- Action Definition OCTET STRING contents
+-- ---------------------------------------------------
+E2SM-gNB-NRT-ActionDefinition ::= CHOICE{
+	actionDefinition-Format1		E2SM-gNB-NRT-ActionDefinition-Format1,
+	...
+}
+
+-- E2SM-gNB-NRT-actionDefinition IE used for Action Format 1
+E2SM-gNB-NRT-ActionDefinition-Format1 ::= SEQUENCE{
+	ranParameter-List					SEQUENCE (SIZE(1..maxofRANParameters)) OF RANparameter-Item OPTIONAL,
+	...
+}
+
+
+
+-- ---------------------------------------------------
+-- Indication Header OCTET STRING contents
+-- ---------------------------------------------------
+
+E2SM-gNB-NRT-IndicationHeader ::= CHOICE{
+	indicationHeader-Format1		E2SM-gNB-NRT-IndicationHeader-Format1,
+	...
+}
+
+-- E2SM-gNB-NRT-indicationHeader Format 1
+E2SM-gNB-NRT-IndicationHeader-Format1 ::= SEQUENCE{
+	timestamp							NRT-TimeStamp OPTIONAL,
+	...
+}
+
+-- ---------------------------------------------------
+-- Indication Message OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-gNB-NRT-indicationMessage IE
+E2SM-gNB-NRT-IndicationMessage ::= CHOICE{
+	indicationMessage-Format1		E2SM-gNB-NRT-IndicationMessage-Format1,
+	...
+}
+
+-- E2SM-gNB-NRT-IndicationMessage Format 1
+NRT-Record-row-item ::= SEQUENCE{
+	neighbourCellID			NRT-Cell-ID,
+	nrt-Record				NRT-TableRecord
+}
+
+NRT-Record-List-item ::= SEQUENCE{
+	servedCellID			NRT-Cell-ID,
+	nrt-Record-row			SEQUENCE (SIZE(1..maxNoOfNeighbours)) OF NRT-Record-row-item
+}
+
+E2SM-gNB-NRT-IndicationMessage-Format1 ::= SEQUENCE{
+	nrt-Record-List			SEQUENCE (SIZE(1..maxofCellinRAN)) OF NRT-Record-List-item,
+	...
+}
+
+-- ---------------------------------------------------
+-- Call Process ID
+-- ---------------------------------------------------
+
+-- Not defined in this E2SM
+
+-- ---------------------------------------------------
+-- Control Header OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-gNB-NRT-ControlHeader
+E2SM-gNB-NRT-ControlHeader ::= CHOICE{
+	controlHeader-Format1		E2SM-gNB-NRT-ControlHeader-Format1,
+	...
+}
+
+-- E2SM-gNB-NRT-ControlHeader Format 1
+E2SM-gNB-NRT-ControlHeader-Format1 ::= SEQUENCE{
+	command					NRT-ControlCommand,
+	servedCellID			NRT-Cell-ID,
+	neighbourCellID			NRT-Cell-ID,
+	...
+}
+
+
+-- ---------------------------------------------------
+-- Control Message OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-gNB-NRT-ControlMessage
+E2SM-gNB-NRT-ControlMessage ::= CHOICE{
+	controlMessage-Format1		E2SM-gNB-NRT-ControlMessage-Format1,
+	...
+}
+
+-- E2SM-gNB-NRT-controlMessage Format 1
+E2SM-gNB-NRT-ControlMessage-Format1 ::= SEQUENCE{
+	tablerecord				NRT-TableRecord,
+	...
+}
+
+-- NEW for Release 4 *****
+-- ---------------------------------------------------
+-- RAN Function Definition OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-gNB-NRT-RANfunction-Definition
+E2SM-gNB-NRT-RANfunction-Definition ::= SEQUENCE{
+	ranFunction-Name	RANfunction-Name,
+	ric-EventTriggerStyle-List	SEQUENCE (SIZE(1..maxofRICstyles)) OF RIC-EventTriggerStyle-List OPTIONAL,
+	ric-ReportStyle-List		SEQUENCE (SIZE(1..maxofRICstyles)) OF RIC-ReportStyle-List OPTIONAL,
+	ric-InsertStyle-List		SEQUENCE (SIZE(1..maxofRICstyles)) OF RIC-InsertStyle-List OPTIONAL,
+	ric-ControlStyle-List		SEQUENCE (SIZE(1..maxofRICstyles)) OF RIC-ControlStyle-List OPTIONAL,
+	ric-PolicyStyle-List		SEQUENCE (SIZE(1..maxofRICstyles)) OF RIC-PolicyStyle-List OPTIONAL,
+	...
+}
+-- ---------------------------------------------------
+-- commmon IEs
+-- ---------------------------------------------------
+
+-- A
+-- B
+-- C
+-- D
+-- E
+-- F
+-- G
+-- H
+-- I
+-- J
+-- K
+-- L
+-- M
+-- N
+
+NRT-Cell-ID ::= CHOICE{
+	ecgi			ECGI,
+	nrcgi			NRCGI,
+	...
+}
+
+NRT-ControlCommand ::= ENUMERATED{
+	addition,
+	deletion,
+	...
+}
+
+NRT-TableRecord ::= OCTET STRING
+
+NRT-TimeStamp ::= OCTET STRING (SIZE(8))
+
+NRT-TriggerNature ::= ENUMERATED{
+	now,
+	onchange,
+	...
+}
+
+-- O
+-- P
+-- Q
+-- R
+
+-- NEW for Release 4 *****
+RANfunction-Name ::= SEQUENCE{
+    ranFunction-ShortName       PrintableString(SIZE(1..150,...)),
+    ranFunction-E2SM-OID		PrintableString(SIZE(1..1000,...)),
+    ranFunction-Description     PrintableString(SIZE(1..150,...)),
+    ranFunction-Instance        INTEGER OPTIONAL,
+    ...
+}
+
+RANparameter-Item ::= SEQUENCE {
+	ranParameter-ID			RANparameter-ID,
+	ranParameter-Value		RANparameter-Value,
+	...
+}
+
+-- NEW for Release 4 *****
+RANparameterDef-Item ::= SEQUENCE {
+	ranParameter-ID			RANparameter-ID,
+	ranParameter-Name		RANparameter-Name,
+	ranParameter-Type		RANparameter-Type,
+	...
+}
+
+RANparameter-ID ::= INTEGER (0..maxofRANParameters)
+
+-- NEW for Release 4 *****
+RANparameter-Name ::= PrintableString(SIZE(1..150,...))
+
+RANparameter-Test ::= ENUMERATED{
+	equal,
+	greaterthan,
+	lessthan,
+	contains,
+	present,
+	...
+}
+
+-- NEW for Release 4 *****
+RANparameter-Type ::= ENUMERATED{
+	integer,
+	enumerated,
+	boolean,
+	bit-string,
+	octet-string,
+	printable-string,
+	...
+} 
+
+RANparameter-Value ::= CHOICE{
+	valueInt	INTEGER,
+	valueEnum	INTEGER,
+	valueBool	BOOLEAN,
+	valueBitS	BIT STRING,
+	valueOctS	OCTET STRING,
+	valuePrtS	PrintableString,
+	...
+} 
+
+-- NEW for Release 4 *****
+RIC-ControlStyle-List ::= SEQUENCE{
+	ric-ControlStyle-Type				RIC-Style-Type,
+	ric-ControlStyle-Name				RIC-Style-Name,
+	ric-ControlHeaderFormat-Type		RIC-Format-Type,
+	ric-ControlMessageFormat-Type		RIC-Format-Type,
+	ric-CallProcessIDFormat-Type		RIC-Format-Type,
+	...
+}
+
+-- NEW for Release 4 *****
+RIC-EventTriggerStyle-List ::= SEQUENCE{
+	ric-EventTriggerStyle-Type			RIC-Style-Type,
+	ric-EventTriggerStyle-Name			RIC-Style-Name,
+	ric-EventTriggerFormat-Type			RIC-Format-Type,
+	...
+}
+
+-- NEW for Release 4 *****
+RIC-InsertStyle-List ::= SEQUENCE{
+	ric-InsertStyle-Type				RIC-Style-Type,
+	ric-InsertStyle-Name				RIC-Style-Name,
+	ric-InsertActionFormat-Type			RIC-Format-Type,
+	ric-InsertRanParameterDef-List		SEQUENCE (SIZE(1..maxofRANParameters)) OF RANparameterDef-Item,
+	ric-IndicationHeaderFormat-Type		RIC-Format-Type,
+	ric-IndicationMessageFormat-Type	RIC-Format-Type,
+	ric-CallProcessIDFormat-Type		RIC-Format-Type,
+	...
+}
+
+-- NEW for Release 4 *****
+RIC-PolicyStyle-List ::= SEQUENCE{
+	ric-PolicyStyle-Type				RIC-Style-Type,
+	ric-PolicyStyle-Name				RIC-Style-Name,
+	ric-PolicyActionFormat-Type			RIC-Format-Type,
+	ric-PolicyRanParameterDef-List		SEQUENCE (SIZE(1..maxofRANParameters)) OF RANparameterDef-Item,
+	...
+}
+
+-- NEW for Release 4 *****
+RIC-ReportStyle-List ::= SEQUENCE{
+	ric-ReportStyle-Type				RIC-Style-Type,
+	ric-ReportStyle-Name				RIC-Style-Name,
+	ric-ReportActionFormat-Type			RIC-Format-Type,
+	ric-ReportRanParameterDef-List		SEQUENCE (SIZE(1..maxofRANParameters)) OF RANparameterDef-Item,
+	ric-IndicationHeaderFormat-Type		RIC-Format-Type,
+	ric-IndicationMessageFormat-Type	RIC-Format-Type,
+	...
+}
+
+-- NEW for Release 4 *****
+RIC-Format-Type ::= INTEGER
+
+-- NEW for Release 4 *****
+RIC-Style-Type ::= INTEGER
+
+-- NEW for Release 4 *****
+RIC-Style-Name ::= PrintableString(SIZE(1..150,...))
+
+-- S
+-- T
+-- U
+-- V
+-- W
+-- X
+-- Y
+-- Z
+
+END
+-- ASN1STOP
+
+
+
+

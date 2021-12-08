@@ -1,0 +1,77 @@
+#   Copyright (c) 2019 AT&T Intellectual Property.
+#   Copyright (c) 2019 Nokia.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+#
+#   This source code is part of the near-RT RIC (RAN Intelligent Controller)
+#   platform project (RICP).
+#
+
+
+# Alpine-linux based containers use musl implementation of libc which causes
+# valgrind to emit false positives. Therefore we run UT with valgrind in
+# a separate build stage that uses ubuntu container with GNU libc installed.
+#
+# NOTE: The valgrind false positive problem could also potentially be solved
+# with valgrind suppression files but that kind of approach may be fragile.
+FROM ubuntu:18.04 as cpputest-build
+
+RUN apt-get update \
+    && apt install -y \
+    automake \
+    autoconf \
+    cmake \
+    curl \
+    g++ \
+    gcc \
+    libtool \
+    make \
+    pkg-config \
+    valgrind \
+    && rm -rf /var/lib/apt/lists/*
+
+# Cpputest built-in memory checks generate false positives in valgrind.
+# This is solved by compiling cpputest with memory checking disabled.
+WORKDIR /cpputest
+RUN curl -L https://github.com/cpputest/cpputest/releases/download/v3.8/cpputest-3.8.tar.gz | \
+    tar --strip-components=1 -xzf -
+WORKDIR /cpputest/builddir
+RUN cmake -DMEMORY_LEAK_DETECTION=OFF .. && \
+    make install
+
+COPY ./redismodule /redismodule
+WORKDIR /redismodule
+RUN ./autogen.sh && \
+    ./configure
+#&& make test
+
+
+FROM nexus3.o-ran-sc.org:10004/o-ran-sc/bldr-alpine3-go:6-a3.11-rmr3 as build-env
+
+RUN apk add cpputest
+COPY ./redismodule /redismodule
+WORKDIR /redismodule
+RUN ./autogen.sh && \
+    ./configure --disable-unit-test-memcheck && \
+    # make test && \
+    make install
+
+FROM redis:5.0.5-alpine3.9
+
+RUN apk add curl
+COPY --from=build-env /usr/local/libexec/redismodule/libredismodule.so /usr/local/libexec/redismodule/libredismodule.so
+WORKDIR /data
+
+#ENTRYPOINT ["sh", "/usr/local/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["redis-server"]

@@ -1,0 +1,37 @@
+<E2AP-PDU>
+    <initiatingMessage>
+        <procedureCode>2</procedureCode>
+        <criticality><ignore/></criticality>
+        <value>
+            <LoadInformation>
+                <protocolIEs>
+                    <LoadInformation-IEs>
+                        <id>6</id>
+                        <criticality><ignore/></criticality>
+                        <value>
+                            <CellInformation-List>
+                                <ProtocolIE-Single-Container>
+                                    <id>7</id>
+                                    <criticality><ignore/></criticality>
+                                    <value>
+                                        <CellInformation-Item>
+                                            <cell-ID>
+                                                <pLMN-Identity>02 F8 29</pLMN-Identity>
+                                                <eUTRANcellIdentifier>
+                                                    0000000000000111101010110101
+                                                </eUTRANcellIdentifier>
+                                            </cell-ID>
+					<ul-InterferenceOverloadIndication>
+						<high-interference/><medium-interference/>
+					</ul-InterferenceOverloadIndication>
+                                        </CellInformation-Item>
+                                    </value>
+                                </ProtocolIE-Single-Container>
+                            </CellInformation-List>
+                        </value>
+                    </LoadInformation-IEs>
+                </protocolIEs>
+            </LoadInformation>
+        </value>
+    </initiatingMessage>
+</E2AP-PDU>

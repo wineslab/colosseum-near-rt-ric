@@ -1,0 +1,54 @@
+# ========================LICENSE_START=================================
+# O-RAN-SC
+#
+# Copyright (C) 2019 AT&T Intellectual Property and Nokia
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========================LICENSE_END===================================
+
+# This source code is part of the near-RT RIC (RAN Intelligent Controller)
+# platform project (RICP).
+
+
+openapi: 3.0.0
+info:
+  title: Kubernetes Simulator
+  description: Kubernetes Simulator APIs
+  version: 0.0.1
+servers:
+  - url: 'http://{apiRoot}/api/v1'
+    variables:
+      apiRoot:
+        default: 'localhost:59009'
+paths:
+  '/namespaces/{namespace}/pods/{pod}':
+    delete:
+      summary: Delete Pod
+      tags:
+        - Delete Pod
+      operationId: DeletePod
+      parameters:
+        - name: namespace
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pod
+          in: path
+          required: true
+          description: pod to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation

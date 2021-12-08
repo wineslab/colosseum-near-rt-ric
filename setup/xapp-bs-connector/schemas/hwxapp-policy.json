@@ -1,0 +1,22 @@
+{
+    "downstream_policy_message": {
+        "policy_type_id":21000,
+        "operation":"CREATE",
+        "policy_instance_id":"Hello-world",
+        "payload":{
+            "class":12,
+            "enforce":true,
+            "window_length":20,
+            "blocking_rate":20,
+            "trigger_threshold":10
+        }
+    },
+
+    "notify_policy_message": {
+        "policy_instance_id":"Hello-world",
+        "policy_type_id":21000,
+        "status":"OK",
+        "handler_id":"HWxAPP1234"
+    }
+}
+

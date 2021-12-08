@@ -1,0 +1,9 @@
+[config]
+nano=38000
+loglevel=info
+volume=log
+local-ip=127.0.0.1
+[xxxyyy]
+#trace is start, stop
+trace=start
+external-fqdn=e2t.att.com

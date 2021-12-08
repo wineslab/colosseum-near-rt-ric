@@ -1,0 +1,10 @@
+nano=38000
+loglevel=info
+volume=log
+local-ip=127.0.0.1
+stam string
+
+xxx=
+#trace is start, stop
+trace=start
+external-fqdn=e2t.att.com

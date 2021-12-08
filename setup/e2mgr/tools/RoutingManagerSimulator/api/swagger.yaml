@@ -1,0 +1,384 @@
+# ========================LICENSE_START=================================
+# O-RAN-SC
+#
+# Copyright (C) 2019 AT&T Intellectual Property and Nokia
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========================LICENSE_END===================================
+
+# This source code is part of the near-RT RIC (RAN Intelligent Controller)
+# platform project (RICP).
+
+
+swagger: "2.0"
+info:
+  description: "This is the Swagger/OpenAPI 2.0 definition of Routing Manager's Northbound\
+    \ API."
+  version: "0.4.0"
+  title: "Routing Manager"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "rtmgr"
+basePath: "/ric/v1"
+tags:
+- name: "handle"
+  description: "Available handles"
+- name: "health"
+  description: "Health of the system"
+schemes:
+- "http"
+paths:
+  /health:
+    get:
+      tags:
+      - "health"
+      summary: "Retrive the health of Routing Manager"
+      description: "By performing a GET method on the health resource, the API caller\
+        \ is able to retrieve the health of Routing Manager"
+      operationId: "get_health"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "The health of the system"
+          schema:
+            $ref: "#/definitions/health-status"
+  /handles:
+    get:
+      tags:
+      - "handle"
+      summary: "Placeholder for further usage"
+      description: "Placeholder for further usage."
+      operationId: "get_handles"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Dummy response"
+  /handles/xapp-handle:
+    post:
+      tags:
+      - "handle"
+      summary: "Provide callback"
+      description: "By performing a POST method on the xapp-handle resource, the API\
+        \ caller is able to perform a callback on Routing Manager."
+      operationId: "provide_xapp_handle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "xapp-callback-data"
+        description: "xApp related callback data"
+        required: true
+        schema:
+          $ref: "#/definitions/xapp-callback-data"
+        x-exportParamName: "XappCallbackData"
+      responses:
+        "201":
+          description: "Callback received"
+        "400":
+          description: "Invalid data"
+  /handles/xapp-subscription-handle:
+    post:
+      tags:
+      - "handle"
+      summary: "API for updating about new xapp subscription"
+      description: "By performing a POST method on the xapp-subscription-handle resource,\
+        \ the API caller is able to update the Routing manager about the creation\
+        \ of new subscription by an Xapp instance."
+      operationId: "provide_xapp_subscription_handle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "xapp-subscription-data"
+        description: "xApp related subscription data"
+        required: true
+        schema:
+          $ref: "#/definitions/xapp-subscription-data"
+        x-exportParamName: "XappSubscriptionData"
+      responses:
+        "201":
+          description: "Xapp Subscription data received"
+        "400":
+          description: "Invalid data"
+    delete:
+      tags:
+      - "handle"
+      summary: "API for deleting an xapp subscription"
+      description: "By performing the delete operation on xapp-subscription-handle\
+        \ resource, the API caller will be able to update routing manager about the\
+        \ deletion of an xapp's subscription"
+      operationId: "delete_xapp_subscription_handle"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "xapp-subscription-data"
+        description: "xApp related subscription data"
+        required: true
+        schema:
+          $ref: "#/definitions/xapp-subscription-data"
+        x-exportParamName: "XappSubscriptionData"
+      responses:
+        "200":
+          description: "Xapp Subscription deleted"
+        "204":
+          description: "Content not found"
+  /handles/xapp-subscription-handle/{subscription_id}:
+    put:
+      tags:
+      - "handle"
+      summary: "API for updating the subscriber xApp list"
+      description: "By performing a PUT method on a xapp-subscription-handle/{subscription_id}\
+        \ resource, the API caller is able to update the Routing manager about the\
+        \ list of subscriber xApps related to the subscription denoted by the {subsription_id}."
+      operationId: "update_xapp_subscription_handle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "subscription_id"
+        in: "path"
+        description: "Subscription ID"
+        required: true
+        type: "integer"
+        format: "uint16"
+        x-exportParamName: "SubscriptionId"
+      - in: "body"
+        name: "xapp-list"
+        description: "xApp list"
+        required: true
+        schema:
+          $ref: "#/definitions/xapp-list"
+        x-exportParamName: "XappList"
+      responses:
+        "201":
+          description: "Xapp list received"
+        "400":
+          description: "Invalid data"
+  /handles/e2t:
+    post:
+      tags:
+      - "handle"
+      summary: "API for establishing platform routes when a new e2t instance gets\
+        \ added to platform"
+      description: "E2T updates its FQDN to E2M  during its initialisation, hence\
+        \ after E2M informs routing manager about new E2T instances FQDN. At this\
+        \ point Routing Mgr would establish platform routes"
+      operationId: "create_new_e2t_handle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "e2t-data"
+        description: "FQDN of the newly joined E2T instance"
+        required: true
+        schema:
+          $ref: "#/definitions/e2t-data"
+        x-exportParamName: "E2tData"
+      responses:
+        "201":
+          description: "new e2t instance is considered and platform routes are established"
+        "400":
+          description: "Invalid data"
+    delete:
+      tags:
+      - "handle"
+      summary: "API for clearing routes specific to a particular e2T instance"
+      description: "E2M would monitor E2T instances using its keep alive based mechanism\
+        \ during this time if an E2T instance is detected to be dead, E2M would distribute\
+        \ already associated ran's to other available/healthy E2T instances. Here\
+        \ E2M would share E2T instance address to be removed OR which is unhealthy\
+        \ and list of RAN instances to be dissociated and an association list which\
+        \ contains E2T FQDN and associated RAN names"
+      operationId: "delete_e2t_handle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "e2t-data"
+        description: "FQDN of the newly joined E2T instance"
+        required: true
+        schema:
+          $ref: "#/definitions/e2t-delete-data"
+        x-exportParamName: "E2tData"
+      responses:
+        "201":
+          description: "new e2t instance is considered and platform routes are established"
+        "400":
+          description: "Invalid data"
+  /handles/associate-ran-to-e2t:
+    post:
+      tags:
+      - "handle"
+      summary: "API for associating a ran to e2t instance"
+      description: "By performing a POST method on rane2tmapping, the API caller is\
+        \ able to update the Routing manager about the ran to e2t mapping which would\
+        \ be finally used to distribute routes to corresponding xApp and E2T instance"
+      operationId: "associate_ran_to_e2t_handle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "ran-e2t-list"
+        description: "ran to e2t mapping"
+        required: true
+        schema:
+          $ref: "#/definitions/ran-e2t-map"
+        x-exportParamName: "RanE2tList"
+      responses:
+        "201":
+          description: "e2t ran mapping recieved, platform routes"
+        "400":
+          description: "Invalid data"
+  /handles/dissociate-ran:
+    post:
+      tags:
+      - "handle"
+      summary: "API to dissociate ran from e2t"
+      description: "By performing a POST method on rane2tmapping, routing manager\
+        \ will dissociate ran name from e2t instance by updating or clearing routes"
+      operationId: "dissociate_ran"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "dissociate-list"
+        description: "list of RAN to dissociate"
+        required: true
+        schema:
+          $ref: "#/definitions/ran-e2t-map"
+        x-exportParamName: "DissociateList"
+      responses:
+        "201":
+          description: "ran instances disociated"
+        "400":
+          description: "Invalid data"
+definitions:
+  health-status:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        enum:
+        - "healthy"
+        - "unhealthy"
+    example:
+      status: "healthy"
+  xapp-callback-data:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      event:
+        type: "string"
+      version:
+        type: "integer"
+        format: "int64"
+      xApps:
+        type: "string"
+  xapp-subscription-data:
+    type: "object"
+    required:
+    - "address"
+    - "port"
+    - "subscription_id"
+    properties:
+      address:
+        type: "string"
+      port:
+        type: "integer"
+        format: "uint16"
+        minimum: 0
+        maximum: 65535
+      subscription_id:
+        type: "integer"
+        format: "int32"
+  xapp-list:
+    type: "array"
+    items:
+      $ref: "#/definitions/xapp-element"
+  xapp-element:
+    type: "object"
+    required:
+    - "address"
+    - "port"
+    properties:
+      address:
+        type: "string"
+      port:
+        type: "integer"
+        format: "uint16"
+        minimum: 0
+        maximum: 65535
+  ran-e2t-map:
+    type: "array"
+    items:
+      $ref: "#/definitions/ran-e2t-element"
+  ran-e2t-element:
+    type: "object"
+    required:
+    - "E2TAddress"
+    properties:
+      E2TAddress:
+        type: "string"
+      ranNamelist:
+        $ref: "#/definitions/ranNamelist"
+  ranNamelist:
+    type: "array"
+    items:
+      type: "string"
+  e2t-data:
+    type: "object"
+    required:
+    - "E2TAddress"
+    properties:
+      E2TAddress:
+        type: "string"
+      ranNamelist:
+        $ref: "#/definitions/ranNamelist"
+  e2t-delete-data:
+    type: "object"
+    required:
+    - "E2TAddress"
+    properties:
+      E2TAddress:
+        type: "string"
+      ranNamelistTobeDissociated:
+        $ref: "#/definitions/ranNamelist"
+      ranAssocList:
+        $ref: "#/definitions/ran-e2t-map"
+externalDocs:
+  description: "Routing Manager"
+  url: "http://placeholder"

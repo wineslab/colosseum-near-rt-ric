@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Config
+users:
+- name: someuser
+  user:
+    token: sometoken
+clusters:
+- cluster:
+    certificate-authority-data: somedata
+    server: 10.0.2.15:59009
+  name: self-hosted-cluster
+contexts:
+- context:
+    cluster: self-hosted-cluster
+    user: svcs-acct-dply
+  name: svcs-acct-context
+current-context: svcs-acct-context

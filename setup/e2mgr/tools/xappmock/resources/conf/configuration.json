@@ -1,0 +1,75 @@
+[
+  {
+    "id": "X2_SETUP_REQUEST",
+    "rmrMessageType": "10060",
+    "transactionId": "e2e$",
+    "payloadHeader": "$ranIp|$ranPort|$ranName|#packedPayload|",
+    "packedPayload": "0006002a000002001500080013302300fffff000140017000001f700133023fffff0000000133023000000000001"
+  },
+  {
+    "id": "X2_SETUP_RESPONSE",
+    "rmrMessageType": "10061",
+    "packedPayload": "2006002a000002001500080002f82900007ab000140017000000630002f8290007ab00102002f829000001000133"
+  },
+  {
+    "id": "RIC_SUBSCRIPTION_REQUEST",
+    "rmrMessageType": "12010",
+    "transactionId": "e2e$",
+    "packedPayload": "00c9002b000003ea7e0005004eec0182ea6300020001ea810015000a0011121300212224264000ea6b000420000000"
+  },
+  {
+    "id": "RIC_SUBSCRIPTION_RESPONSE",
+    "rmrMessageType": "12011",
+    "transactionId": "e2e$",
+    "packedPayload": "20c9001d000003ea7e0005004eec0182ea6300020001ea6c000700ea6d40020000"
+  },
+  {
+    "id": "RIC_SUBSCRIPTION_FAILURE",
+    "rmrMessageType": "12012",
+    "transactionId": "e2e$",
+    "packedPayload": "40c9001f000003ea7e00050000010001ea6300020000ea6e000908ea6f400400014100"
+  },
+  {
+    "id": "RIC_SUBSCRIPTION_DELETE_REQUEST",
+    "rmrMessageType": "12020",
+    "transactionId": "e2e$",
+    "packedPayload": "00ca0012000002ea7e0005004eec0182ea6300020001"
+  },
+  {
+    "id": "RIC_SUBSCRIPTION_DELETE_RESPONSE",
+    "rmrMessageType": "12021",
+    "transactionId": "e2e$",
+    "packedPayload": "20ca0012000002ea7e0005004eec0182ea6300020001"
+  },
+  {
+    "id": "RIC_INDICATION",
+    "rmrMessageType": "12050"
+  },
+  {
+    "id": "RESOURCE_STATUS_REQUEST",
+    "rmrMessageType": "10090",
+    "transactionId": "e2e$",
+    "packedPayload": "0009003c0000080027000300000e001c00010000260004fe000000001d400d00001f4008000a0b0cabcd8000001e4001000040400100006d4001000091400100"
+  },
+  {
+    "id": "RESOURCE_STATUS_RESPONSE",
+    "rmrMessageType": "10091",
+    "transactionId": "e2e$",
+    "packedPayload": "20090065000003002700030000000028000300004a00414050000042404b4013302302b030a2800043400700020000000a000043400700040000000a000043400700080000000a000043400700200000000a000043400700400000000a000043400700800000000a00"
+  },
+  {
+    "id": "RESOURCE_STATUS_FAILURE",
+    "rmrMessageType": "10092",
+    "transactionId": "e2e$",
+    "packedPayload": "400900320000040027000300000e0028000300000c00054001620044401800004540130002f8290007ab500000434006000000000740"
+  },
+  {
+    "id": "RESOURCE_STATUS_UPDATE",
+    "rmrMessageType": "10090"
+  },
+  {
+    "id": "LOAD_INFORMATION",
+    "rmrMessageType": "10020"
+  }
+]
+

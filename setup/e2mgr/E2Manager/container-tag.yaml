@@ -1,0 +1,4 @@
+# The Jenkins job requires a tag to build the Docker image.
+# Global-JJB script assumes this file is in the repo root.
+---
+tag: 4.4.12

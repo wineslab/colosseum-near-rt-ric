@@ -1,0 +1,11 @@
+---
+distribution_type: container
+container_release_tag: 1.0.6
+container_pull_registry: nexus3.o-ran-sc.org:10004
+container_push_registry: nexus3.o-ran-sc.org:10002
+project: ric-app/hw
+ref: ddcb3f18bd50f8c04b90068c326e0ab828e20b6b
+containers:
+    - name: ric-app-hw
+      version: 1.0.6
+

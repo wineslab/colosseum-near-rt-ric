@@ -1,0 +1,5 @@
+# The Jenkins job requires a tag to build the Docker image.
+# This file is expected to be in the docker build directory;
+# can be moved with suitable JJB configuration.
+---
+tag: '0.4.1'

@@ -1,0 +1,199 @@
+-- ASN1START
+-- **************************************************************
+-- E2SM-HelloWorld
+-- Information Element Definitions
+-- 
+-- **************************************************************
+
+E2SM-HelloWorld-IEs { }
+
+DEFINITIONS AUTOMATIC TAGS ::= 
+
+BEGIN
+
+-- **************************************************************
+--
+-- Lists
+--
+-- **************************************************************
+
+maxofRANParameters						INTEGER ::= 255
+
+-- E2 Service model IEs
+
+-- ---------------------------------------------------
+-- Event Trigger Definition OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-HelloWorld-EventTriggerDefinition IE
+E2SM-HelloWorld-EventTriggerDefinition ::= CHOICE{
+	eventDefinition-Format1		E2SM-HelloWorld-EventTriggerDefinition-Format1,
+	...
+}
+
+-- E2SM-HelloWorld-eventTriggerDefinition IE Format 1
+E2SM-HelloWorld-EventTriggerDefinition-Format1 ::= SEQUENCE{
+	triggerNature						HW-TriggerNature,
+	...
+}
+
+-- ---------------------------------------------------
+-- Action Definition OCTET STRING contents
+-- ---------------------------------------------------
+E2SM-HelloWorld-ActionDefinition ::= CHOICE{
+	actionDefinition-Format1		E2SM-HelloWorld-ActionDefinition-Format1,
+	...
+}
+
+-- E2SM-HelloWorld-actionDefinition IE used for Action Format 1
+E2SM-HelloWorld-ActionDefinition-Format1 ::= SEQUENCE{
+	ranParameter-List					SEQUENCE (SIZE(1..maxofRANParameters)) OF RANparameter-Item OPTIONAL,
+	...
+}
+
+
+
+-- ---------------------------------------------------
+-- Indication Header OCTET STRING contents
+-- ---------------------------------------------------
+
+E2SM-HelloWorld-IndicationHeader ::= CHOICE{
+	indicationHeader-Format1		E2SM-HelloWorld-IndicationHeader-Format1,
+	...
+}
+
+-- E2SM-HelloWorld-indicationHeader Format 1
+E2SM-HelloWorld-IndicationHeader-Format1 ::= SEQUENCE{
+	indicationHeaderParam						HW-Header,
+	...
+}
+
+-- ---------------------------------------------------
+-- Indication Message OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-HelloWorld-indicationMessage IE
+E2SM-HelloWorld-IndicationMessage ::= CHOICE{
+	indicationMessage-Format1		E2SM-HelloWorld-IndicationMessage-Format1,
+	...
+}
+
+-- E2SM-HelloWorld-IndicationMessage Format 1
+E2SM-HelloWorld-IndicationMessage-Format1 ::= SEQUENCE{
+        indicationMsgParam                      HW-Message,
+        ...
+}
+
+
+-- ---------------------------------------------------
+-- Call Process ID
+-- ---------------------------------------------------
+
+-- Not defined in this E2SM
+
+-- ---------------------------------------------------
+-- Control Header OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-HelloWorld-ControlHeader
+E2SM-HelloWorld-ControlHeader ::= CHOICE{
+	controlHeader-Format1		E2SM-HelloWorld-ControlHeader-Format1,
+	...
+}
+
+-- E2SM-HelloWorld-ControlHeader Format 1
+E2SM-HelloWorld-ControlHeader-Format1 ::= SEQUENCE{
+	controlHeaderParam			HW-Header,
+	...
+}
+
+
+-- ---------------------------------------------------
+-- Control Message OCTET STRING contents
+-- ---------------------------------------------------
+
+-- E2SM-HelloWorld-ControlMessage
+E2SM-HelloWorld-ControlMessage ::= CHOICE{
+	controlMessage-Format1		E2SM-HelloWorld-ControlMessage-Format1,
+	...
+}
+
+-- E2SM-HelloWorld-controlMessage Format 1
+E2SM-HelloWorld-ControlMessage-Format1 ::= SEQUENCE{
+	controlMsgParam				HW-Message,
+	...
+}
+
+-- ---------------------------------------------------
+-- commmon IEs
+-- ---------------------------------------------------
+
+-- A
+-- B
+-- C
+-- D
+-- E
+-- F
+-- G
+-- H
+
+HW-Header ::= INTEGER
+
+HW-Message ::= OCTET STRING
+
+HW-TriggerNature ::= ENUMERATED{
+	now,
+	onchange,
+	...
+}
+-- I
+-- J
+-- K
+-- L
+-- M
+-- N
+-- O
+-- P
+-- Q
+-- R
+
+
+RANparameter-Item ::= SEQUENCE {
+	ranParameter-ID			RANparameter-ID,
+	ranParameter-Name		RANparameter-Name,
+	ranParameter-Test		RANparameter-Test,
+	ranParameter-Value		RANparameter-Value,
+	...
+}
+
+
+RANparameter-ID ::= INTEGER (0..maxofRANParameters)
+
+RANparameter-Name ::= OCTET STRING
+
+RANparameter-Test ::= ENUMERATED{
+	equal,
+	greaterthan,
+	lessthan,
+	contains,
+	present,
+	...
+}
+
+RANparameter-Value ::= OCTET STRING
+
+-- S
+-- T
+-- U
+-- V
+-- W
+-- X
+-- Y
+-- Z
+
+END
+-- ASN1STOP
+
+
+
+

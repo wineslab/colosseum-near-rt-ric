@@ -1,0 +1,50 @@
+<E2AP-PDU>
+    <initiatingMessage>
+        <procedureCode>2</procedureCode>
+        <criticality><ignore/></criticality>
+        <value>
+            <LoadInformation>
+                <protocolIEs>
+                    <LoadInformation-IEs>
+                        <id>6</id>
+                        <criticality><ignore/></criticality>
+                        <value>
+                            <CellInformation-List>
+                                <ProtocolIE-Single-Container>
+                                    <id>7</id>
+                                    <criticality><ignore/></criticality>
+                                    <value>
+                                        <CellInformation-Item>
+                                            <cell-ID>
+                                                <pLMN-Identity>02 F8 29</pLMN-Identity>
+                                                <eUTRANcellIdentifier>
+                                                    0000000000000111101010110101
+                                                </eUTRANcellIdentifier>
+                                            </cell-ID>
+					<ul-InterferenceOverloadIndication>
+						<high-interference/>
+					</ul-InterferenceOverloadIndication>
+					<ul-HighInterferenceIndicationInfo>
+						<UL-HighInterferenceIndicationInfo-Item>
+					<target-Cell-ID>
+                                                <pLMN-Identity>02 F8 30</pLMN-Identity>
+                                                <eUTRANcellIdentifier>
+                                                    0000000000000111101010110101
+                                                </eUTRANcellIdentifier>
+					</target-Cell-ID>
+					<ul-interferenceindication>
+						1010101010101010
+					</ul-interferenceindication>
+				</UL-HighInterferenceIndicationInfo-Item>
+					</ul-HighInterferenceIndicationInfo>
+                                        </CellInformation-Item>
+                                    </value>
+                                </ProtocolIE-Single-Container>
+                            </CellInformation-List>
+                        </value>
+                    </LoadInformation-IEs>
+                </protocolIEs>
+            </LoadInformation>
+        </value>
+    </initiatingMessage>
+</E2AP-PDU>

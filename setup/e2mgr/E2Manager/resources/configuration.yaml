@@ -1,0 +1,19 @@
+logging:
+  logLevel: info
+http:
+  port: 3800
+rmr:
+  port: 3801
+  maxMsgSize: 65536
+routingManager:
+  baseUrl: http://10.0.2.15:12020/ric/v1/handles/
+notificationResponseBuffer: 100
+bigRedButtonTimeoutSec: 5
+maxRnibConnectionAttempts: 3
+rnibRetryIntervalMs: 10
+keepAliveResponseTimeoutMs: 4500
+keepAliveDelayMs: 1500
+e2tInstanceDeletionTimeoutMs: 15000
+globalRicId:
+  plmnId: 131014
+  ricNearRtId: 556670

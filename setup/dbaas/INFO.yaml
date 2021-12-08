@@ -1,0 +1,68 @@
+---
+project: 'ric_plt_dbaas'
+project_creation_date: '2019-11-08'
+project_category: ''
+lifecycle_state: 'Incubation'
+project_lead: &oran_ric_plt_dbaas_ptl
+    name: 'Thoralf Czichy'
+    email: 'thoralf.czichy@nokia.com'
+    id: 'czichy'
+    company: 'Nokia'
+    timezone: 'America/New_York'
+primary_contact: *oran_ric_plt_dbaas_ptl
+issue_tracking:
+    type: 'jira'
+    url: 'https://jira.o-ran-sc.org/projects/'
+    key: 'ric_plt_dbaas'
+mailing_list:
+    type: 'groups.io'
+    url: 'technical-discuss@lists.o-ran-sc.org'
+    tag: '[]'
+realtime_discussion:
+    type: 'irc'
+    server: 'freenode.net'
+    channel: '#oran'
+meetings:
+    - type: 'gotomeeting+irc'
+      agenda: 'https://wiki.o-ran-sc.org/display/'
+      url: ''
+      server: 'freenode.net'
+      channel: '#oran'
+      repeats: ''
+      time: ''
+repositories:
+    - ric-plt/dbaas
+committers:
+    - <<: *oran_ric_plt_dbaas_ptl
+    - name: 'makiaija'
+      email: 'jussi.maki-aijala@nokia.com'
+      company: 'nokia'
+      id: 'makiaija'
+      timezone: 'Unknown/Unknown'
+    - name: 'Marco Tallskog'
+      email: 'marco.tallskog@nokia.com'
+      company: 'nokia'
+      id: 'tallskog'
+      timezone: 'Unknown/Unknown'
+    - name: 'Timo Tietavainen'
+      email: 'timo.tietavainen@nokia.com'
+      company: 'nokia'
+      id: 'tietavai'
+      timezone: 'Unknown/Unknown'
+    - name: 'Rolf Badorek'
+      email: 'rolf.badorek@nokia.com'
+      company: 'nokia'
+      id: 'badorek'
+      timezone: 'Unknown/Unknown'
+    - name: 'Arvo Heinonen'
+      email: 'arvo.heinonen@nokia.com'
+      company: 'nokia'
+      id: 'arvo.heinonen'
+      timezone: 'Unknown/Unknown'
+tsc:
+    # yamllint disable rule:line-length
+    approval: 'missing'
+    changes:
+        - type: ''
+          name: ''
+          link: ''

@@ -1,0 +1,229 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "service_ports",
+    "rmr",
+    "envs"
+  ],
+  "properties": {
+    "service_ports": {
+      "$id": "#/properties/service_ports",
+      "type": "object",
+      "title": "The Service_ports Schema",
+      "required": [
+        "xapp_port",
+        "rmr_port"
+      ],
+      "properties": {
+        "xapp_port": {
+          "$id": "#/properties/service_ports/properties/xapp_port",
+          "type": "integer",
+          "title": "The Xapp_port Schema",
+          "default": 0,
+          "examples": [
+            4560
+          ]
+        },
+        "rmr_port": {
+          "$id": "#/properties/service_ports/properties/rmr_port",
+          "type": "integer",
+          "title": "The Rmr_port Schema",
+          "default": 0,
+          "examples": [
+            4561
+          ]
+        }
+      }
+    },
+    "rmr": {
+      "$id": "#/properties/rmr",
+      "type": "object",
+      "title": "The Rmr Schema",
+      "required": [
+        "protPort",
+        "maxSize",
+        "numWorkers",
+        "txMessages",
+        "rxMessages",
+        "file_path",
+        "contents"
+      ],
+      "properties": {
+        "protPort": {
+          "$id": "#/properties/rmr/properties/protPort",
+          "type": "string",
+          "title": "The Protport Schema",
+          "default": "",
+          "examples": [
+            "tcp:4560"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "maxSize": {
+          "$id": "#/properties/rmr/properties/maxSize",
+          "type": "integer",
+          "title": "The Maxsize Schema",
+          "default": 0,
+          "examples": [
+            2072
+          ]
+        },
+        "numWorkers": {
+          "$id": "#/properties/rmr/properties/numWorkers",
+          "type": "integer",
+          "title": "The Numworkers Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "txMessages": {
+          "$id": "#/properties/rmr/properties/txMessages",
+          "type": "array",
+          "title": "The Txmessages Schema",
+          "items": {
+            "$id": "#/properties/rmr/properties/txMessages/items",
+            "type": "string",
+            "title": "The Items Schema",
+            "default": "",
+            "examples": [
+              "RIC_SUB_REQ",
+              "RIC_SUB_DEL_REQ"
+            ],
+            "pattern": "^(.*)$"
+          }
+        },
+        "rxMessages": {
+          "$id": "#/properties/rmr/properties/rxMessages",
+          "type": "array",
+          "title": "The Rxmessages Schema",
+          "items": {
+            "$id": "#/properties/rmr/properties/rxMessages/items",
+            "type": "string",
+            "title": "The Items Schema",
+            "default": "",
+            "examples": [
+              "RIC_SUB_RESP",
+              "RIC_SUB_FAILURE",
+              "RIC_SUB_DEL_RESP",
+              "RIC_SUB_DEL_FAILURE",
+              "RIC_INDICATION"
+            ],
+            "pattern": "^(.*)$"
+          }
+        },
+        "file_path": {
+          "$id": "#/properties/rmr/properties/file_path",
+          "type": "string",
+          "title": "The File_path Schema",
+          "default": "",
+          "examples": [
+            "/tmp/routeinfo/routes.txt"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "contents": {
+          "$id": "#/properties/rmr/properties/contents",
+          "type": "string",
+          "title": "The Contents Schema",
+          "default": "",
+          "examples": [
+            "newrt|start\nrte|0|localhost:4560\nrte|2|localhost:4591\nrte|10002|localhost:4560\nrte|10005|localhost:4560\nrte|10003|localhost:4591\nrte|12010|localhost:4591\nrte|12020|localhost:4591\nrte|12011|localhost:4560\nrte|12012|localhost:4560\nrte|12021|localhost:4560\nrte|12022|localhost:4560\nrte|20000|localhost:4560\nrte|20001|localhost:4566\nnewrt|end "
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    },
+    "envs": {
+      "$id": "#/properties/envs",
+      "type": "object",
+      "title": "The Envs Schema",
+      "required": [
+        "gNodeB",
+        "THREADS",
+        "A1_SCHEMA_FILE",
+        "VES_SCHEMA_FILE",
+        "SAMPLE_FILE",
+        "VES_COLLECTOR_URL",
+        "VES_MEAUSUREMENT_INTERVAL"
+      ],
+      "properties": {
+        "gNodeB": {
+          "$id": "#/properties/envs/properties/gNodeB",
+          "type": "string",
+          "title": "The Gnodeb Schema",
+          "default": "",
+          "examples": [
+            "NYC123"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "THREADS": {
+          "$id": "#/properties/envs/properties/THREADS",
+          "type": "string",
+          "title": "The Threads Schema",
+          "default": "",
+          "examples": [
+            "1"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "A1_SCHEMA_FILE": {
+          "$id": "#/properties/envs/properties/A1_SCHEMA_FILE",
+          "type": "string",
+          "title": "The A1_schema_file Schema",
+          "default": "",
+          "examples": [
+            "/etc/xapp/adm-ctrl-xapp-schema.json"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "VES_SCHEMA_FILE": {
+          "$id": "#/properties/envs/properties/VES_SCHEMA_FILE",
+          "type": "string",
+          "title": "The Ves_schema_file Schema",
+          "default": "",
+          "examples": [
+            "/etc/xapp/ves_schema.json"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "SAMPLE_FILE": {
+          "$id": "#/properties/envs/properties/SAMPLE_FILE",
+          "type": "string",
+          "title": "The Sample_file Schema",
+          "default": "",
+          "examples": [
+            "/etc/xapp/samples.json"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "VES_COLLECTOR_URL": {
+          "$id": "#/properties/envs/properties/VES_COLLECTOR_URL",
+          "type": "string",
+          "title": "The Ves_collector_url Schema",
+          "default": "",
+          "examples": [
+            "127.0.0.1:6350"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "VES_MEAUSUREMENT_INTERVAL": {
+          "$id": "#/properties/envs/properties/VES_MEAUSUREMENT_INTERVAL",
+          "type": "string",
+          "title": "The Ves_meausurement_interval Schema",
+          "default": "",
+          "examples": [
+            "10"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}
+

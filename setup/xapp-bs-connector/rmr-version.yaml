@@ -1,0 +1,3 @@
+# Communicate to CI which version of RMR to install in the build/vet environment
+---
+version: 4.0.5

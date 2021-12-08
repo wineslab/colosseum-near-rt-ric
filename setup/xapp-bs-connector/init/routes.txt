@@ -1,0 +1,6 @@
+newrt|start
+rte|20011|service-ricplt-a1mediator-rmr.ricplt:4562
+rte|20012|service-ricplt-a1mediator-rmr.ricplt:4562
+rte|12010|10.0.2.10:38000
+rte|12040|10.0.2.10:38000
+newrt|end

@@ -1,0 +1,30 @@
+{
+    
+    "metrics": {
+	"event": {
+	    "commonEventHeader": {
+		"startEpochMicrosec": 1542231546086613,
+		"eventId": "HW Requests",
+		"eventType": "HW Request Rate",
+		"priority": "Normal",
+		"version": "4.0.1",
+		"reportingEntityName": "HW xAPP",
+		"sequence": 0,
+		"domain": "measurement",
+		"lastEpochMicrosec": 1542231556086613,
+		"eventName": "Measurement_vGMUX",
+		"sourceName": "hw-xapp",
+		"vesEventListenerVersion": "7.0.1"
+	    },
+	    "measurementFields": {
+		"additionalFields":{
+		    "Class Id":1,
+		    "HW Request Count":"100",
+                    "HW Accept Count":"10"
+		},
+		"measurementInterval":60,
+		"measurementFieldsVersion":"4.0"
+	    }
+	}
+    }
+}

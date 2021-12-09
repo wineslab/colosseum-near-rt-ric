@@ -439,7 +439,7 @@ void Xapp::startup_subscribe_requests(void ){
         int function_id = 0;
 
         // DU report timer in ms
-        std::string event_def = "1000";
+        std::string event_def = "250";
 
         din.set_request(request_id);
         din.set_function_id(function_id);

@@ -74,10 +74,10 @@ An easy way to derive the gNB ID is the following. From the `setup-scripts` dire
 - Start the near-real-time RIC Docker containers: `./setup-ric.sh`
 - Read the logs of the `e2term` container: `docker logs e2term -f`
 - Connect the RAN node through the E2 termination as explained [here](https://github.com/wineslab/colosseum-scope-e2)
-- The RAN node should connect to the near-real-time RIC and the gNB ID should appear in the `e2term` logs (see example below)
+- The RAN node should connect to the near-real-time RIC and the gNB ID should appear in the `e2term` logs. In the example below, the gNB ID is `gnb:311-048-01000501`
 
   ```
-  TODO insert sample gNB ID from e2term logs
+  {"ts":1639008174427,"crit":"DEBUG","id":"E2Terminator","mdc":{"thread id":"139898725332736"},"msg":"After processing message and sent to rmr for : gnb:311-048-01000501, Read time is : 0 seconds, 1044889 nanoseconds"}
   ```
 
 ### Using the provided sample xApp

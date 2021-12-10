@@ -47,7 +47,7 @@ root
 We provide a Colosseum LXC container that contains this repository, its prerequisites, and base docker images. The container XXX can be found among the images available for Colosseum users. 
 
 From the `setup-scripts` directory:
-- Build, configure, and start the near-real-time RIC Docker containers: `./setup-ric.sh`
+- Build, configure, and start the near-real-time RIC Docker containers: `./setup-ric.sh ric-network-interface`
 - Connect the RAN node through the E2 termination as explained [here](https://github.com/wineslab/colosseum-scope-e2)
 - Get the gNB ID (see section below) and replace it in the `start-xapp.sh` script
 - Configure and start the xApp: `./start-xapp.sh`
@@ -57,7 +57,7 @@ From the `setup-scripts` directory:
 The `setup-scripts` directory contains scripts to initialize the near-real-time RIC on Colosseum.
 - `import-base-images.sh`: script to import the base Docker images needed to build the RIC Docker containers. These images are provided as part of the XXX Colosseum LXC container.
 - `setup-lib.sh`: contains the IP addresses and ports used by the Docker containers of this repository. This script has been adapted from [here](https://gitlab.flux.utah.edu/johnsond/ric-profile/-/blob/master/setup-lib.sh)
-- `setup-ric.sh`: script to build, configure, and start the near-real-time RIC containers of this repository (namely, `db`, `e2mgr`, `e2rtmansim`, `e2term`). This script has been adapted from [here](https://gitlab.flux.utah.edu/johnsond/ric-profile/-/blob/master/setup-ric.sh)
+- `setup-ric.sh`: script to build, configure, and start the near-real-time RIC containers of this repository (namely, `db`, `e2mgr`, `e2rtmansim`, `e2term`). Set the interface the RIC listens for connection through the `RIC_INTERFACE` variable in the script. This script has been adapted from [here](https://gitlab.flux.utah.edu/johnsond/ric-profile/-/blob/master/setup-ric.sh)
 - `start-ric-arena.sh`: script to start the near-real-time RIC on external testbeds, e.g., on the [Arena platform](https://ece.northeastern.edu/wineslab/arena.php)
 - `setup-sample-xapp.sh`: script to setup a sample xApp Docker container. This xApp is capable of connecting to the [SCOPE](https://github.com/wineslab/colosseum-scope) RAN environment through the following [E2 termination](https://github.com/wineslab/colosseum-scope-e2). Custom or standard-compliant service models can be implemented on top of the RAN E2 termination and the sample xApp, as done for example [in these]() [papers](https://ece.northeastern.edu/wineslab/papers/bonati2021intelligence.pdf)
 - `start-xapp.sh`: script to configure and start the sample xApp. The ID of the gNB targeted by the xApp needs to be provided in the script, as discussed below

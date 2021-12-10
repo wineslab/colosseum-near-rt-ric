@@ -1,4 +1,5 @@
 #!/bin/sh
+# Script to setup the RIC containers. Call as ./setup-ric.sh [network interface]
 
 set -x
 

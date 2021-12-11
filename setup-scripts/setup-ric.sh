@@ -16,7 +16,7 @@ done
 
 # get RIC interface from cli arguments
 if [ $# -eq 0 ] || [ "$import" = false ] ; then
-    RIC_INTERFACE="can0"
+    RIC_INTERFACE="col0"
 else
     if [ "$arena" = true ]; then
         RIC_INTERFACE="brric"

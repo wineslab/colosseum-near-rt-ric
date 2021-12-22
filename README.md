@@ -37,7 +37,7 @@ root
 |  |
 |  └──sample-xapp
 |  |
-|  └──xapp-bs-connector
+|  └──xapp-sm-connector
 ```
 
 ### Quick start
@@ -66,7 +66,7 @@ This directory contains the implementations of the near-real-time RIC Docker con
 - `dbaas`: implementation of a Redis database (`db`) container
 - `e2`: implementation of the E2 termination (`e2term`) container
 - `e2mgr`: implementation of the E2 manager (`e2mgr`) and of the routing manager simulator (`e2rtmansim`) container
-- `sample-xapp`, `xapp-bs-connector`: implementation of the sample xApp provided in this repository and components to connect to the near-real-time RIC and [SCOPE](https://github.com/wineslab/colosseum-scope) RAN environment
+- `sample-xapp`, `xapp-sm-connector`: implementation of the sample xApp provided in this repository and components to connect to the near-real-time RIC and [SCOPE](https://github.com/wineslab/colosseum-scope) RAN environment
 
 These components are adapted from the [O-RAN Software Community RIC platform (Bronze)](https://github.com/o-ran-sc), which we extended to support the Colosseum environment, concurrent connections from multiple base stations and xApps, and to provide improved support for encoding, decoding and routing of control messages.
 
@@ -88,4 +88,4 @@ The sample xApp provided in this repository connects to the [SCOPE](https://gith
 After the near-real-time RIC has successfully started, the DU connected to it, and the xApp has been properly configured and started (see "Quick start" section above):
 - Enter the xApp docker container (named `sample-xapp-24` by default): `docker exec -it sample-xapp-24`
 - Move to the `/home/sample-xapp` directory inside the Docker container: `cd /home/sample-xapp`
-- Run the xApp logic: `./run_xapp.sh`. This script will open a socket between the sample Python script in the `sample-xapp` directory (which by defaults prints the data received from the RAN node) and the base station connector of the `xapp-bs-connector` directory, which performs ASN.1 encoding and decoding of E2AP messages. Then, the xApp will subscribe to the RAN node specified at container startup time through the gNB ID, and receive a RIC Indication Message with a data report from the RAN node with the periodicity of 250 ms.
+- Run the xApp logic: `./run_xapp.sh`. This script will open a socket between the sample Python script in the `sample-xapp` directory (which by defaults prints the data received from the RAN node) and the service model connector of the `xapp-sm-connector` directory, which performs ASN.1 encoding and decoding of E2AP messages. Then, the xApp will subscribe to the RAN node specified at container startup time through the gNB ID, and receive a RIC Indication Message with a data report from the RAN node with the periodicity of 250 ms.

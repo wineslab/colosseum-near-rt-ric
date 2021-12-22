@@ -5,7 +5,7 @@ set -x
 
 IMAGE_NAME=sample-xapp
 MODEL_DIR=sample-xapp
-CONNECTOR_DIR=xapp-bs-connector
+CONNECTOR_DIR=xapp-sm-connector
 DOCKER_FILE=Dockerfile
 SETUP_DIR=../setup
 
@@ -62,10 +62,10 @@ $SUDO docker run -d -it --entrypoint ${ENTRYPOINT} --network ric --ip ${XAPP_IP}
     -e DBAAS_SERVICE_HOST=$DBAAS_IP -e DBAAS_SERVICE_PORT=$DBAAS_PORT --name ${CONTAINER_NAME} ${IMAGE_NAME}:latest
 
 if [ -n "${GNB_ID}" ]; then
-    docker exec ${CONTAINER_NAME} sed -i "s/^export GNB_ID.*/export GNB_ID=${GNB_ID}/g" /home/xapp-bs-connector/build_xapp.sh
+    docker exec ${CONTAINER_NAME} sed -i "s/^export GNB_ID.*/export GNB_ID=${GNB_ID}/g" /home/xapp-sm-connector/build_xapp.sh
 fi
 
-docker exec ${CONTAINER_NAME} sed -i "s/^export XAPP_ID.*/export XAPP_ID=${XAPP_ID}/g" /home/xapp-bs-connector/build_xapp.sh
-docker exec ${CONTAINER_NAME} /home/xapp-bs-connector/build_xapp.sh clean
+docker exec ${CONTAINER_NAME} sed -i "s/^export XAPP_ID.*/export XAPP_ID=${XAPP_ID}/g" /home/xapp-sm-connector/build_xapp.sh
+docker exec ${CONTAINER_NAME} /home/xapp-sm-connector/build_xapp.sh clean
 docker container restart ${CONTAINER_NAME}
 

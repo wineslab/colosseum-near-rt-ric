@@ -11,5 +11,5 @@ echo "[`date`] Pause 10 s" >> /home/container.log
 sleep 10
 
 echo "[`date`] Run connector" >> /home/container.log
-cd /home/xapp-bs-connector && ./run_xapp.sh
+cd /home/xapp-sm-connector && ./run_xapp.sh
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export DEBUG=0
-export CONNECTOR_DIR=/home/xapp-bs-connector
+export CONNECTOR_DIR=/home/xapp-sm-connector
 
 # these are replaced through the dockerfile
 export GNB_ID

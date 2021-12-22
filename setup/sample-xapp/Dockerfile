@@ -3,7 +3,7 @@
 #------------------------------------
 ARG SCHEMA_PATH=schemas
 ARG XAPP_DIR=sample-xapp
-ARG CONNECTOR_DIR=xapp-bs-connector
+ARG CONNECTOR_DIR=xapp-sm-connector
 ARG STAGE_DIR=/home/${CONNECTOR_DIR}
 ARG DBAAS_SERVICE_HOST=10.0.2.12
 ARG DBAAS_SERVICE_PORT="6379"

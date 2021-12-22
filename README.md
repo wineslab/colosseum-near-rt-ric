@@ -4,9 +4,7 @@ This is a minimal version of the O-RAN Software Community near-real-time RIC (Br
 The scripts in this repository will start a minimal near-real-time RIC in the form of Docker containers (namely, `db`, `e2mgr`, `e2rtmansim`, `e2term`).
 The repository also features a sample xApp, which connects to the [SCOPE](https://github.com/wineslab/colosseum-scope) RAN environment through the following [E2 termination](https://github.com/wineslab/colosseum-scope-e2).
 
-If you use this software, please reference the following paper:
-
-M. Polese, L. Bonati, S. D'Oro, S. Basagni, T. Melodia, "ColoRAN: Design and Testing of Open RAN Intelligence on Large-scale Experimental Platforms," arXiv 2112.09559 [cs.NI], December 2021.
+If you use this software, please reference the following paper: M. Polese, L. Bonati, S. D'Oro, S. Basagni, T. Melodia, "ColoRAN: Design and Testing of Open RAN Intelligence on Large-scale Experimental Platforms," arXiv 2112.09559 [cs.NI], December 2021.
 
 This work was partially supported by the U.S. National Science Foundation under Grants CNS-1923789 and NSF CNS-1925601, and the U.S. Office of Naval Research under Grant N00014-20-1-2132.
 

@@ -1,6 +1,6 @@
 # Colosseum Near-Real-Time RIC
 
-This is a minimal version of the O-RAN Software Community near-real-time RIC (Bronze release) adapted and extended to work on the [Colosseum](https://www.colosseum.net/) wireless network emulator.
+This is a part of the [OpenRAN Gym](https://openrangym.com) project. It is minimal version of the O-RAN Software Community near-real-time RIC (Bronze release) adapted and extended to work on the [Colosseum](https://www.colosseum.net/) wireless network emulator.
 The scripts in this repository will start a minimal near-real-time RIC in the form of Docker containers (namely, `db`, `e2mgr`, `e2rtmansim`, `e2term`).
 The repository also features a sample xApp, which connects to the [SCOPE](https://github.com/wineslab/colosseum-scope) RAN environment through the following [E2 termination](https://github.com/wineslab/colosseum-scope-e2).
 
@@ -42,7 +42,7 @@ root
 
 ### Quick start
 
-We provide a Colosseum LXC container that contains this repository, its prerequisites, and base docker images. The container XXX can be found among the images available for Colosseum users. 
+We provide a Colosseum LXC container that contains this repository, its prerequisites, and base docker images. The container `coloran-near-rt-ric` can be found among the images available for Colosseum users. The default username and password are `root` and `ChangeMe`.
 
 From the `setup-scripts` directory:
 - Build, configure, and start the near-real-time RIC Docker containers: `./setup-ric.sh ric-network-interface`
@@ -53,7 +53,7 @@ From the `setup-scripts` directory:
 ### setup-scripts directory
 
 The `setup-scripts` directory contains scripts to initialize the near-real-time RIC on Colosseum.
-- `import-base-images.sh`: script to import the base Docker images needed to build the RIC Docker containers. These images are provided as part of the XXX Colosseum LXC container.
+- `import-base-images.sh`: script to import the base Docker images needed to build the RIC Docker containers. These images are provided as part of the `coloran-near-rt-ric` Colosseum LXC container.
 - `setup-lib.sh`: contains the IP addresses and ports used by the Docker containers of this repository. This script has been adapted from [here](https://gitlab.flux.utah.edu/johnsond/ric-profile/-/blob/master/setup-lib.sh)
 - `setup-ric.sh`: script to build, configure, and start the near-real-time RIC containers of this repository (namely, `db`, `e2mgr`, `e2rtmansim`, `e2term`). The network interface the RIC listens to for connections (e.g., the `col0` interface in Colosseum) is passed as argument. This script has been adapted from [here](https://gitlab.flux.utah.edu/johnsond/ric-profile/-/blob/master/setup-ric.sh)
 - `start-ric-arena.sh`: script to start the near-real-time RIC on external testbeds, e.g., on the [Arena platform](https://ece.northeastern.edu/wineslab/arena.php)

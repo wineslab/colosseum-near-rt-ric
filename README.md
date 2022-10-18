@@ -15,7 +15,7 @@ This work was partially supported by the U.S. National Science Foundation under 
 This repository is organized as follows
 
 ```
-root 
+/root/radio_code/colosseum-near-rt-ric 
 |
 └──setup-scripts
 |   |
@@ -47,7 +47,7 @@ root
 We provide a Colosseum LXC container that contains this repository, its prerequisites, and base docker images. The container `coloran-near-rt-ric-prebuilt` can be found among the images available for Colosseum users. The default username and password are `root` and `ChangeMe`.
 
 From the `setup-scripts` directory:
-- Build, configure, and start the near-real-time RIC Docker containers: `./setup-ric.sh ric-network-interface`
+- Build, configure, and start the near-real-time RIC Docker containers: `./setup-ric.sh ric-network-interface`, where `ric-network-interface` is the interface from which you want to expose the RIC E2 termination (e.g., `col0` or `can0` in Colosseum).
 - Connect the RAN node through the E2 termination as explained [here](https://github.com/wineslab/colosseum-scope-e2)
 - Get the gNB ID (see section below) and replace it in the `start-xapp.sh` script
 - Configure and start the xApp: `./start-xapp.sh`

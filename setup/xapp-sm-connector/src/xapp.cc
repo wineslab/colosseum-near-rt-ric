@@ -93,8 +93,27 @@ void Xapp::startup(SubscriptionHandler &sub_ref) {
         // get list of gnbs from ric
         std::cout << "Getting gNB list from RIC" << std::endl;
         set_rnib_gnblist();
-    }
-    else {
+    } else if (strcmp(GNB_ID, "file") == 0) {
+        // Get gNB list from file
+        std::cout << "Getting gNB list from file" << std::endl;
+        std::ifstream id_file("gnb_list.txt", ios_base::in);
+        if(!id_file) {
+            std::cerr << "Error in opening file, gonna crash!" << std::endl;
+            exit(-1);
+        }
+        std::string id_gnb;
+        while(getline(id_file,id_gnb)){
+            std::cout << "gNB read: " << id_gnb << std::endl;
+            rnib_gnblist.push_back(id_gnb);
+        }
+    } else if (strcmp(GNB_ID, "ns-o-ran") == 0) {
+        std::vector <std::string> gnb_ids{"gnb:131-133-31000000", "gnb:131-133-32000000", "gnb:131-133-33000000",
+                                          "gnb:131-133-34000000", "gnb:131-133-35000000"};
+        for (vector<string>::iterator it = gnb_ids.begin(); it != gnb_ids.end(); it++) {
+            std::cout << "gNB read: " << *it << std::endl;
+            rnib_gnblist.push_back(*it);
+        }
+    } else {
         // only insert target gnb
         std::cout << "Querying target gNB" << std::endl;
         rnib_gnblist.push_back(GNB_ID);
@@ -270,7 +289,7 @@ void Xapp::handle_external_control_message(int port) {
     while (true) {
         auto addrlen = sizeof(sockaddr);
         int connection = accept(sockfd, (struct sockaddr*)&sockaddr, (socklen_t*)&addrlen);
-    
+
         if (connection < 0) {
             continue;
         }
@@ -279,7 +298,7 @@ void Xapp::handle_external_control_message(int port) {
         const size_t max_size = 256;
         char buffer[max_size] = {0};
         auto bytes_read = read(connection, buffer, 100);
-        
+
         if (bytes_read > 0) {
             std::cout << "External control socket. Message received: " << buffer << std::endl;
 
@@ -326,7 +345,7 @@ void Xapp::terminate_du_reporting(void) {
 }
 
 void Xapp::send_ric_control_request(char* payload, std::string gnb_id) {
-  
+
     std::cout << "Sending RIC Control Request" << std::endl;
 
 	bool res;
@@ -436,7 +455,7 @@ void Xapp::startup_subscribe_requests(void ){
 
         //Random Data  for request
         int request_id = XAPP_REQ_ID;
-        int function_id = 0;
+        int function_id = 200;
 
         // DU report timer in ms
         std::string event_def = "250";
@@ -533,7 +552,7 @@ void Xapp::set_rnib_gnblist(void) {
     	std::string name = gnbobj["inventory_name"].GetString();
     	rnib_gnblist.push_back(name);
     }
-    
+
     closeSdl();
     return;
 }

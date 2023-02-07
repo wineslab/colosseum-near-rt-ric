@@ -61,42 +61,43 @@ RUN apt-get update  \
   && apt-get install -y \
     python3 \
     python3-pip \
-# Install mdclog using debian package hosted at packagecloud.io
-  && wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/mdclog_${MDC_VER}_amd64.deb/download.deb \
+    gdb
+  # Install mdclog using debian package hosted at packagecloud.io
+RUN wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/mdclog_${MDC_VER}_amd64.deb/download.deb \
   && wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/mdclog-dev_${MDC_VER}_amd64.deb/download.deb \
   && dpkg -i mdclog_${MDC_VER}_amd64.deb \
   && dpkg -i mdclog-dev_${MDC_VER}_amd64.deb \
-  && rm mdclog_${MDC_VER}_amd64.deb mdclog-dev_${MDC_VER}_amd64.deb \
+  && rm mdclog_${MDC_VER}_amd64.deb mdclog-dev_${MDC_VER}_amd64.deb
 # Install RMR using debian package hosted at packagecloud.io
-  && wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/rmr_${RMR_VER}_amd64.deb/download.deb \
+RUN wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/rmr_${RMR_VER}_amd64.deb/download.deb \
   && wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/rmr-dev_${RMR_VER}_amd64.deb/download.deb \
   && dpkg -i rmr_${RMR_VER}_amd64.deb \
   && dpkg -i rmr-dev_${RMR_VER}_amd64.deb \
-  && rm rmr_${RMR_VER}_amd64.deb rmr-dev_${RMR_VER}_amd64.deb \
+  && rm rmr_${RMR_VER}_amd64.deb rmr-dev_${RMR_VER}_amd64.deb
 # Install RNIB libraries
-  && wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/rnib_${RNIB_VER}_all.deb/download.deb \
+RUN wget -nv --content-disposition https://packagecloud.io/o-ran-sc/release/packages/debian/stretch/rnib_${RNIB_VER}_all.deb/download.deb \
   && dpkg -i rnib_${RNIB_VER}_all.deb \
-  && rm rnib_${RNIB_VER}_all.deb \
+  && rm rnib_${RNIB_VER}_all.deb
 # Install dbaas
-  && cd ${STAGE_DIR} \
+RUN cd ${STAGE_DIR} \
   && git clone https://gerrit.o-ran-sc.org/r/ric-plt/dbaas \
   && cd dbaas/redismodule \
   && ./autogen.sh \
   && ./configure \
   && make -j ${nproc} all \
   && make install \
-  && rm -Rf ${STAGE_DIR}/dbaas \
+  && rm -Rf ${STAGE_DIR}/dbaas
 # Install sdl
-  && cd ${STAGE_DIR} \
+RUN cd ${STAGE_DIR} \
   && git clone https://gerrit.o-ran-sc.org/r/ric-plt/sdl \
   && cd sdl \
   && ./autogen.sh \
   && ./configure \
   && make -j ${nproc} all \
   && make install \
-  && rm -Rf ${STAGE_DIR}/sdl \
+  && rm -Rf ${STAGE_DIR}/sdl
 # Install rapidjson
-  && cd ${STAGE_DIR} \
+RUN cd ${STAGE_DIR} \
   && git clone https://github.com/Tencent/rapidjson \
   && cd rapidjson \
   && mkdir build \
@@ -105,14 +106,13 @@ RUN apt-get update  \
   && make -j ${nproc} \
   && make install \
   && cd ${STAGE_DIR} \
-  && rm -rf rapidjson \
+  && rm -rf rapidjson
 ##-----------------------------------
 # Now install the program
 #------------------------------------
 # build connector
-  && export CPATH=$CPATH:/usr/local/include \
+RUN export CPATH=$CPATH:/usr/local/include \
   && cd src \
-  && make clean \
   && make -j ${nproc} \
   && make install \
   && ldconfig \

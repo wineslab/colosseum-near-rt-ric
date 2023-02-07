@@ -157,7 +157,7 @@ OS__add_stack_el(struct _stack *st) {
 		nel = (struct _stack_el *)CALLOC(1, sizeof(struct _stack_el));
 		if(nel == NULL)
 			return NULL;
-	
+
 		if(st->tail) {
 			/* Increase a subcontainment depth */
 			nel->cont_level = st->tail->cont_level + 1;
@@ -745,7 +745,7 @@ OCTET_STRING__handle_control_chars(void *struct_ptr, const void *chunk_buf, size
 			return 0;
 		}
 	}
-	
+
 	return -1;	/* No, it's not */
 }
 
@@ -1956,7 +1956,9 @@ OCTET_STRING_encode_aper(const asn_TYPE_descriptor_t *td,
 		        ret = aper_put_length(po, csiz->upper_bound - csiz->lower_bound + 1, sizeinunits - csiz->lower_bound);
 		        if(ret) ASN__ENCODE_FAILED;
 		}
-		if (st->size > 2) { /* X.691 #16 NOTE 1 */
+		/* EB MOD
+                   AFAIU if lb != ub it is aligned whatever the number of bits */
+		if ((st->size > 2) || (csiz->lower_bound != csiz->upper_bound)) { /* X.691 #16.11 */
 			if (aper_put_align(po) < 0)
 				ASN__ENCODE_FAILED;
 		}

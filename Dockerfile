@@ -14,12 +14,14 @@
 #   limitations under the License.
 #==================================================================================
 
-FROM wineslab/o-ran-sc-bldr-ubuntu18-c-go:9-u18.04 as buildenv
+FROM ubuntu:latest as buildenv
 ARG log_level_e2sim=2
 # log_level_e2sim = 0 ->  LOG_LEVEL_UNCOND   0
 # log_level_e2sim = 1 -> LOG_LEVEL_ERROR     1
 # log_level_e2sim = 2 -> LOG_LEVEL_INFO      2
 # log_level_e2sim = 3 -> LOG_LEVEL_DEBUG     3
+
+# RUN echo nameserver 8.8.8.8 > /etc/resolv.conf && echo nameserver 8.8.4.4 >> /etc/resolv.conf
 
 # Install E2sim
 RUN mkdir -p /workspace
@@ -41,7 +43,7 @@ RUN ldconfig
 WORKDIR /workspace
 
 # Install ns-3
-RUN apt-get install -y g++ python3 qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+RUN apt-get install -y g++ python3
 
 RUN git clone -b release https://github.com/wineslab/ns-o-ran-ns3-mmwave /workspace/ns3-mmwave-oran
 RUN git clone -b master https://github.com/o-ran-sc/sim-ns3-o-ran-e2 /workspace/ns3-mmwave-oran/contrib/oran-interface

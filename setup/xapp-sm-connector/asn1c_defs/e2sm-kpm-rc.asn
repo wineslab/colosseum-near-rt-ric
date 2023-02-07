@@ -1,0 +1,751 @@
+-- ASN1START
+-- **************************************************************
+--
+-- Constant definitions
+--
+-- **************************************************************
+
+E2SM-KPM-RC {
+iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53148 e2(1) version1 (1) e2ap(1) e2sm-kpm-rc (1) }
+
+DEFINITIONS AUTOMATIC TAGS ::= 
+
+BEGIN
+
+Criticality             ::= ENUMERATED { reject, ignore, notify }
+
+Presence                ::= ENUMERATED { optional, conditional, mandatory }
+
+ProcedureCode           ::= INTEGER (0..255)
+
+ProtocolIE-ID           ::= INTEGER (0..65535)
+
+TriggeringMessage       ::= ENUMERATED { initiating-message, successful-outcome, unsuccessfull-outcome }
+
+-- **************************************************************
+--
+-- IEs
+-- 
+-- **************************************************************
+id-Cause									ProtocolIE-ID ::= 1
+id-CriticalityDiagnostics					ProtocolIE-ID ::= 2
+id-GlobalE2node-ID							ProtocolIE-ID ::= 3
+id-GlobalRIC-ID								ProtocolIE-ID ::= 4
+id-RANfunctionID   							ProtocolIE-ID ::= 5
+id-RANfunctionID-Item   					ProtocolIE-ID ::= 6
+id-RANfunctionIEcause-Item					ProtocolIE-ID ::= 7
+id-RANfunction-Item							ProtocolIE-ID ::= 8
+id-RANfunctionsAccepted						ProtocolIE-ID ::= 9
+id-RANfunctionsAdded						ProtocolIE-ID ::= 10
+id-RANfunctionsDeleted						ProtocolIE-ID ::= 11
+id-RANfunctionsModified						ProtocolIE-ID ::= 12
+id-RANfunctionsRejected						ProtocolIE-ID ::= 13
+id-RICaction-Admitted-Item					ProtocolIE-ID ::= 14
+id-RICactionID								ProtocolIE-ID ::= 15
+id-RICaction-NotAdmitted-Item				ProtocolIE-ID ::= 16
+id-RICactions-Admitted						ProtocolIE-ID ::= 17
+id-RICactions-NotAdmitted					ProtocolIE-ID ::= 18
+id-RICaction-ToBeSetup-Item					ProtocolIE-ID ::= 19
+id-RICcallProcessID							ProtocolIE-ID ::= 20
+id-RICcontrolAckRequest						ProtocolIE-ID ::= 21
+id-RICcontrolHeader							ProtocolIE-ID ::= 22
+id-RICcontrolMessage						ProtocolIE-ID ::= 23
+id-RICcontrolStatus							ProtocolIE-ID ::= 24
+id-RICindicationHeader						ProtocolIE-ID ::= 25
+id-RICindicationMessage						ProtocolIE-ID ::= 26
+id-RICindicationSN							ProtocolIE-ID ::= 27
+id-RICindicationType						ProtocolIE-ID ::= 28
+id-RICrequestID								ProtocolIE-ID ::= 29
+id-RICsubscriptionDetails					ProtocolIE-ID ::= 30
+id-TimeToWait								ProtocolIE-ID ::= 31
+id-RICcontrolOutcome						ProtocolIE-ID ::= 32
+id-E2nodeComponentConfigUpdate				ProtocolIE-ID ::= 33
+id-E2nodeComponentConfigUpdate-Item			ProtocolIE-ID ::= 34
+id-E2nodeComponentConfigUpdateAck			ProtocolIE-ID ::= 35
+id-E2nodeComponentConfigUpdateAck-Item		ProtocolIE-ID ::= 36
+id-E2connectionSetup						ProtocolIE-ID ::= 39
+id-E2connectionSetupFailed					ProtocolIE-ID ::= 40
+id-E2connectionSetupFailed-Item				ProtocolIE-ID ::= 41
+id-E2connectionFailed-Item					ProtocolIE-ID ::= 42
+id-E2connectionUpdate-Item					ProtocolIE-ID ::= 43
+id-E2connectionUpdateAdd					ProtocolIE-ID ::= 44
+id-E2connectionUpdateModify					ProtocolIE-ID ::= 45
+id-E2connectionUpdateRemove					ProtocolIE-ID ::= 46
+id-E2connectionUpdateRemove-Item			ProtocolIE-ID ::= 47
+id-TNLinformation							ProtocolIE-ID ::= 48
+
+-- E2SM-RC Service Model IEs
+-- **************************************************************
+
+-- **************************************************************
+--   Event Trigger Definition OCTET STRING contents
+
+-- **************************************************************
+
+-- E2SM-KPM RAN Function Definition IEs
+
+E2SM-KPM-RANFunctionDefinition ::= SEQUENCE {
+	ranFunction-Name	RANfunction-Name,
+	ric-EventTriggerStyle-List	SEQUENCE (SIZE(1..maxnoofRICStyles)) OF RIC-EventTriggerStyle-Item	OPTIONAL,
+	ric-ReportStyle-List		SEQUENCE (SIZE(1..maxnoofRICStyles)) OF RIC-ReportStyle-Item		OPTIONAL,
+	...
+}
+
+RIC-ReportStyle-Item ::= SEQUENCE {
+	ric-ReportStyle-Type		RIC-Style-Type,
+	ric-ReportStyle-Name		RIC-Style-Name,
+	ric-ReportIndicationHeaderFormat-Type	RIC-Format-Type,
+	ric-ReportIndicationMessageFormat-Type	RIC-Format-Type,
+	...
+}
+
+E2SM-KPM-ActionDefinition ::= SEQUENCE {
+	ric-ReportStyle-Type			RIC-Style-Type,
+	actionDefinition-formats		CHOICE {
+		actionDefinition-Format1	E2SM-KPM-ActionDefinition-Format1,
+		...
+	},
+	...
+}
+
+E2SM-KPM-ActionDefinition-Format1 ::= SEQUENCE {
+	cellObjID	CellObjectID,
+	measInfoList	MeasurementInfoList,
+	...
+}
+
+E2SM-KPM-IndicationHeader ::= CHOICE {
+	indicationHeader-Format1	E2SM-KPM-IndicationHeader-Format1,
+	...
+}
+
+E2SM-KPM-IndicationHeader-Format1 ::= SEQUENCE {
+	collectionStartTime		TimeStamp,
+	id-GlobalE2node-ID		GlobalE2node-ID,
+	...
+}
+
+E2SM-KPM-IndicationMessage ::= CHOICE {
+	indicationMessage-Format1	E2SM-KPM-IndicationMessage-Format1,
+	...
+}
+
+-- E2SM-KPM-IndicationMessage-Format 1 IE
+
+E2SM-KPM-IndicationMessage-Format1 ::= SEQUENCE{
+	pm-Containers		SEQUENCE (SIZE(1..maxofContainers)) OF PM-Containers-Item,
+	cellObjectID		CellObjectID,
+	list-of-PM-Information	SEQUENCE (SIZE(1..maxnoofPMMeasurements)) OF PM-Info-Item OPTIONAL,
+	list-of-matched-UEs	SEQUENCE (SIZE(1..maxnoofUEs)) OF PerUE-PM-Item	OPTIONAL,
+    	...
+}
+
+PM-Containers-Item ::= SEQUENCE{
+	performanceContainer	    PF-Container    OPTIONAL,
+	theRANContainer     	    RAN-Container   OPTIONAL,
+	...
+}
+
+PerUE-PM-Item ::= SEQUENCE{
+	ueId		UE-Identity,
+	list-of-PM-Information	SEQUENCE (SIZE(1..maxnoofPMMeasurements)) OF PM-Info-Item OPTIONAL,
+	...
+}
+
+PM-Info-Item ::= SEQUENCE{
+	pmType		MeasurementType,
+	pmVal		MeasurementValue,	
+	...
+}
+
+PF-Container ::= CHOICE {
+	oDU		ODU-PF-Container,
+	oCU-CP	OCUCP-PF-Container,
+   	oCU-UP   OCUUP-PF-Container
+}
+
+ODU-PF-Container ::= SEQUENCE{
+    	cellResourceReportList SEQUENCE (SIZE(1..maxCellingNBDU)) OF CellResourceReportListItem,
+    	...                 
+}
+
+CellResourceReportListItem ::= SEQUENCE{
+    nRCGI                       NRCGI,
+    dl-TotalofAvailablePRBs     INTEGER (0..273) OPTIONAL,
+    ul-TotalofAvailablePRBs     INTEGER (0..273) OPTIONAL,
+    servedPlmnPerCellList       SEQUENCE (SIZE(1..maxPLMN)) OF ServedPlmnPerCellListItem,
+    ...
+}
+
+ServedPlmnPerCellListItem ::= SEQUENCE{
+    pLMN-Identity	    PLMN-Identity,
+    du-PM-5GC               FGC-DU-PM-Container OPTIONAL,
+    du-PM-EPC               EPC-DU-PM-Container OPTIONAL,
+    ...
+}
+
+FGC-DU-PM-Container ::= SEQUENCE{
+    slicePerPlmnPerCellList SEQUENCE (SIZE(1..maxnoofSliceItems)) OF SlicePerPlmnPerCellListItem,
+    ...
+}
+
+SlicePerPlmnPerCellListItem ::= SEQUENCE{
+    sliceID		S-NSSAI,
+    fQIPERSlicesPerPlmnPerCellList SEQUENCE (SIZE(1..maxnoofQoSFlows)) OF FQIPERSlicesPerPlmnPerCellListItem,
+    ...
+}
+
+FQIPERSlicesPerPlmnPerCellListItem ::= SEQUENCE{
+    fiveQI		   FiveQI,
+    dl-PRBUsage            INTEGER (0..273) OPTIONAL,
+    ul-PRBUsage            INTEGER (0..273) OPTIONAL,
+    ...
+}
+
+EPC-DU-PM-Container ::= SEQUENCE{
+    perQCIReportList-du SEQUENCE (SIZE(1..maxnoofQCI)) OF PerQCIReportListItem,
+    ...
+}
+
+PerQCIReportListItem ::= SEQUENCE{
+    qci                    QCI,
+    dl-PRBUsage            INTEGER (0..100) OPTIONAL,
+    ul-PRBUsage            INTEGER (0..100) OPTIONAL,
+    ...
+}
+
+-- **************************************************************
+-- O-CUCP Container IEs
+-- **************************************************************
+
+
+OCUCP-PF-Container ::= SEQUENCE{
+    cu-CP-Resource-Status SEQUENCE {
+        numberOfActive-UEs  INTEGER (1..65535, ...) OPTIONAL
+    }
+}
+
+-- **************************************************************
+-- O-CU-UP Container IEs
+-- **************************************************************
+
+OCUUP-PF-Container ::= SEQUENCE{
+    pf-ContainerList      SEQUENCE (SIZE(1..maxnoofContainerListItems)) OF PF-ContainerListItem,
+    ...                 
+}
+
+PF-ContainerListItem ::= SEQUENCE{
+    interface-type				  NI-Type,
+    o-CU-UP-PM-Container          		  CUUPMeasurement-Container,
+    ...
+}
+
+CUUPMeasurement-Container ::= SEQUENCE{
+    plmnList SEQUENCE (SIZE(1.. maxPLMN)) OF PlmnID-Item,
+    ...
+}
+
+PlmnID-Item ::= SEQUENCE{
+    pLMN-Identity	     PLMN-Identity,
+    cu-UP-PM-5GC             FGC-CUUP-PM-Format OPTIONAL,
+    cu-UP-PM-EPC             EPC-CUUP-PM-Format OPTIONAL,
+    ...
+}
+
+FGC-CUUP-PM-Format ::= SEQUENCE{
+    sliceToReportList SEQUENCE (SIZE(1..maxnoofSliceItems)) OF SliceToReportListItem,
+    ...
+}
+
+SliceToReportListItem ::= SEQUENCE{
+    sliceID		S-NSSAI,
+    fQIPERSlicesPerPlmnList SEQUENCE (SIZE(1..maxnoofQoSFlows)) OF FQIPERSlicesPerPlmnListItem,
+    ...
+}
+
+FQIPERSlicesPerPlmnListItem ::= SEQUENCE{
+     fiveQI		    FiveQI,
+     pDCPBytesDL            INTEGER (0..10000000000,...) OPTIONAL,
+     pDCPBytesUL            INTEGER (0..10000000000,...) OPTIONAL,
+     ...
+}
+
+EPC-CUUP-PM-Format ::= SEQUENCE{
+    perQCIReportList-cuup SEQUENCE (SIZE(1..maxnoofQCI)) OF PerQCIReportListItemFormat,
+    ...
+}
+
+PerQCIReportListItemFormat ::= SEQUENCE{
+    drbqci                    QCI,
+    pDCPBytesDL            INTEGER (0..10000000000,...) OPTIONAL,
+    pDCPBytesUL            INTEGER (0..10000000000,...) OPTIONAL,
+    ...
+}
+
+MeasurementValue ::= CHOICE{
+	valueInt	INTEGER,
+	valueReal	REAL,
+	noValue		NULL,
+	valueRRC	L3-RRC-Measurements,
+	...
+}
+
+L3-RRC-Measurements ::= SEQUENCE {
+	rrcEvent			RRCEvent,
+	servingCellMeasurements		ServingCellMeasurements		OPTIONAL,
+	measResultNeighCells		MeasResultNeighCells		OPTIONAL,		
+	...
+}
+
+RRCEvent		::=	ENUMERATED {b1, a3, a5, periodic, ...}
+
+ServingCellMeasurements ::= CHOICE {
+	nr-measResultServingMOList		MeasResultServMOList,
+	eutra-measResultPCell			MeasResultPCell,
+	...
+}
+
+MeasResultServMOList ::= SEQUENCE (SIZE (1..maxNrofServingCells)) OF MeasResultServMO
+
+MeasResultServMO ::= SEQUENCE {
+	servCellId			ServCellIndex,
+	measResultServingCell		MeasResultNR,
+	measResultBestNeighCell		MeasResultNR			OPTIONAL,
+	...
+}
+
+MeasResultNR ::= SEQUENCE {
+	physCellId			PhysCellId					OPTIONAL,
+	measResult			SEQUENCE {
+		cellResults			SEQUENCE {
+			resultsSSB-Cell			MeasQuantityResults		OPTIONAL,
+			resultsCSI-RS-Cell		MeasQuantityResults		OPTIONAL
+		},
+		rsIndexResults			SEQUENCE {
+			resultsSSB-Indexes		ResultsPerSSB-IndexList		OPTIONAL,
+			resultsCSI-RS-Indexes		ResultsPerCSI-RS-IndexList	OPTIONAL
+		}									OPTIONAL
+	},
+	...
+}
+
+MeasResultListEUTRA	::=	SEQUENCE (SIZE (1..maxCellReport)) OF MeasResultEUTRA
+
+MeasResultEUTRA		::=	SEQUENCE {
+	eutra-PhysCellId	PhysCellId,
+	measResult		MeasQuantityResultsEUTRA,
+	...
+}
+
+MeasResultPCell ::= SEQUENCE {
+	eutra-PhysCellId	PhysCellId,
+	rsrpResult		RSRP-Range,
+	rsrqResult		RSRQ-Range,
+	...	
+}
+
+MeasResultNeighCells ::= CHOICE {
+	measResultListNR	MeasResultListNR,
+	measResultListEUTRA	MeasResultListEUTRA,
+	...
+}
+
+MeasResultListNR	::=	SEQUENCE (SIZE (1..maxCellReport)) OF MeasResultNR
+
+maxCellReport		INTEGER ::= 8
+
+PhysCellId	::=		INTEGER (0..1007)
+
+ServCellIndex	::=		INTEGER (0..maxNrofServingCells-1)
+
+MeasQuantityResults ::= SEQUENCE {
+	rsrp		RSRP-Range		OPTIONAL,
+	rsrq		RSRQ-Range		OPTIONAL,
+	sinr		SINR-Range		OPTIONAL,
+	...
+}
+
+MeasQuantityResultsEUTRA ::= SEQUENCE {
+	rsrp		RSRP-RangeEUTRA		OPTIONAL,
+	rsrq		RSRQ-RangeEUTRA		OPTIONAL,
+	sinr		SINR-RangeEUTRA		OPTIONAL,
+	...
+}
+
+RSRP-RangeEUTRA			::=		INTEGER (0..97)
+
+RSRQ-RangeEUTRA			::=		INTEGER (0..34)
+
+SINR-RangeEUTRA			::=		INTEGER (0..127)
+
+ResultsPerSSB-IndexList		::= 		SEQUENCE (SIZE (1..maxNrofIndexesToReport2)) OF ResultsPerSSB-Index
+
+ResultsPerSSB-Index		::=		SEQUENCE {
+	ssb-Index		SSB-Index,
+	ssb-Results		MeasQuantityResults		OPTIONAL,
+	...
+}
+
+ResultsPerCSI-RS-IndexList	::=		SEQUENCE (SIZE (1..maxNrofIndexesToReport2)) OF ResultsPerCSI-RS-Index
+
+ResultsPerCSI-RS-Index		::=		SEQUENCE {
+	csi-RS-Index		CSI-RS-Index,
+	csi-RS-Results		MeasQuantityResults		OPTIONAL,
+	...
+}
+
+SSB-Index		::=		INTEGER (0..maxNrofSSBs-1)
+
+maxNrofSSBs-1		INTEGER ::= 63
+
+CSI-RS-Index		::=		INTEGER (0..maxNrofCSI-RS-ResourcesRRM-1)
+
+maxNrofCSI-RS-ResourcesRRM-1		INTEGER ::= 95
+
+RSRP-Range		::=		INTEGER (0..127)
+
+RSRQ-Range		::=		INTEGER (0..127)
+
+SINR-Range		::=		INTEGER (0..127)
+
+maxNrofServingCells	INTEGER ::= 32
+
+maxNrofServingCells-1	INTEGER ::= 31
+
+maxNrofIndexesToReport2		INTEGER ::= 64
+
+TimeStamp ::= OCTET STRING (SIZE(4))
+
+CellObjectID ::= PrintableString(SIZE (0..400), ...)
+
+MeasurementInfoList ::= SEQUENCE (SIZE(1..maxnoofMeasurementInfo)) OF MeasurementInfoItem
+
+MeasurementInfoItem ::= SEQUENCE {
+	measType		MeasurementType,
+	...
+}
+
+MeasurementType ::= CHOICE {
+	measName			MeasurementTypeName,
+	measID				MeasurementTypeID,
+	...
+}
+
+NRCGI ::= SEQUENCE {
+	pLMN-Identity			PLMN-Identity,
+	nRCellIdentity			NRCellIdentity,
+	...
+}
+
+NRCellIdentity ::= BIT STRING (SIZE(36))
+
+S-NSSAI ::= SEQUENCE {
+	sST			OCTET STRING (SIZE(1)),
+	sD			OCTET STRING (SIZE(3)) 	OPTIONAL
+}
+
+MeasurementTypeName ::= PrintableString(SIZE(1.. 150, ...))
+
+MeasurementTypeID ::= INTEGER (1.. 65535, ...)
+
+maxnoofMeasurementInfo	INTEGER ::= 65535
+
+maxofMessageProtocolTests	    INTEGER ::= 15
+
+FiveQI ::= INTEGER (0..255,...)
+
+QCI ::= INTEGER (0..255,...)
+
+maxnoofQCI                          INTEGER ::= 256
+
+maxnoofQoSFlows                     INTEGER ::= 64
+
+maxnoofSliceItems                   INTEGER ::= 1024
+
+maxnoofContainerListItems           INTEGER ::=  3
+
+maxCellingNBDU                      INTEGER ::= 512
+
+maxofContainers                     INTEGER ::= 8
+
+maxPLMN                             INTEGER ::= 12 
+
+maxnoofUEs			    INTEGER ::= 65535
+
+maxnoofPMMeasurements		    INTEGER ::= 2147483647
+
+NI-Type ::= ENUMERATED{
+    x2-u,
+    xn-u,
+    f1-u,
+    ...
+}
+
+RAN-Container ::= OCTET STRING
+
+-- E2SM-RC RAN Function Definition IEs
+
+E2SM-RC-RANFunctionDefinition ::= SEQUENCE{
+	ranFunction-Name	RANfunction-Name,
+	ric-EventTriggerStyle-List	SEQUENCE (SIZE(1..maxnoofRICStyles)) OF RIC-EventTriggerStyle-Item	OPTIONAL,
+	ric-ControlStyle-List		SEQUENCE (SIZE(1..maxnoofRICStyles)) OF RIC-ControlStyle-Item		OPTIONAL,
+	...
+}
+
+RANfunction-Name ::= SEQUENCE{
+	ranFunction-ShortName	PrintableString (SIZE(1..150,...)),
+	ranFunction-E2SM-OID	PrintableString (SIZE(1..150,...)),
+	ranFunction-Description	PrintableString (SIZE(1..150,...)),
+	ranFunction-Instance	INTEGER	OPTIONAL,
+	...
+}
+
+RIC-EventTriggerStyle-Item ::= SEQUENCE{
+	ric-EventTriggerStyle-Type	RIC-Style-Type,
+	ric-EventTriggerStyle-Name	RIC-Style-Name,
+	ric-EventTriggerFormat-Type	RIC-Format-Type,
+	...
+}
+
+RIC-ControlStyle-Item ::= SEQUENCE{
+	ric-ControlStyle-Type	RIC-Style-Type,
+	ric-ControlStyle-Name	RIC-Style-Name,
+	ric-ControlAction-List	SEQUENCE (SIZE(1..maxnoofControlAction)) OF RIC-ControlAction-Item	OPTIONAL,
+	ric-ControlHeaderFormat-Type	RIC-Format-Type,
+	ric-ControlMessageFormat-Type	RIC-Format-Type,
+	...	
+}
+
+RIC-ControlAction-Item ::= SEQUENCE{
+	ric-ControlAction-ID	RIC-ControlAction-ID,
+	ric-ControlAction-Name	RIC-ControlAction-Name,
+	ran-ControlParameters-List	SEQUENCE (SIZE(1..maxnoofAssociatedRANInfo)) OF RAN-ControlParameter-Item	OPTIONAL,	
+	...
+}
+
+RAN-ControlParameter-Item ::= SEQUENCE{
+	ranParameter-ID		RANParameter-ID,
+	ranParameter-Name	RANParameter-Name,
+	...
+}
+
+-- ***************************************************
+-- Control Header OCTET STRING contents
+-- ***************************************************
+
+-- E2SM-RC-ControlHeader IE
+
+E2SM-RC-ControlHeader ::= CHOICE{
+	controlHeader-Format1	E2SM-RC-ControlHeader-Format1,
+	...
+}
+
+-- E2SM-RC-ControlHeader Format 1
+
+E2SM-RC-ControlHeader-Format1 ::= SEQUENCE{
+	ueId			UE-Identity,
+	ric-ControlStyle-Type	RIC-Style-Type,
+	ric-ControlAction-ID	RIC-ControlAction-ID,
+	...
+}
+
+-- ***************************************************
+-- Control Message OCTET STRING contents
+-- ***************************************************
+
+-- E2SM-RC-ControlMessage IE
+
+E2SM-RC-ControlMessage ::= CHOICE{
+	controlMessage-Format1	E2SM-RC-ControlMessage-Format1,
+	...
+}
+
+-- E2SM-RC-ControlMessage Format 1
+
+E2SM-RC-ControlMessage-Format1 ::= SEQUENCE{
+	ranParameters-List	SEQUENCE (SIZE(1..maxnoofAssociatedRANInfo)) OF RANParameter-Item	OPTIONAL,
+	...
+}
+
+RANParameter-Item ::= SEQUENCE{
+	ranParameterItem-ID		RANParameter-ID,
+	ranParameterItem-valueType	RANParameter-ValueType,
+	...
+}
+
+RANParameter-ValueType ::= CHOICE {
+	ranParameter-Element	RANParameter-ELEMENT,
+	ranParameter-Structure	RANParameter-STRUCTURE,
+	ranParameter-List	RANParameter-LIST,
+	...
+}
+
+RANParameter-ELEMENT ::= SEQUENCE {
+	keyFlag		BOOLEAN,
+	ranParameter-Value	RANParameter-Value,
+	...
+}
+
+RANParameter-STRUCTURE ::= SEQUENCE {
+	sequence-of-ranParameters	SEQUENCE (SIZE(1..maxnoofParametersInStructure)) OF RANParameter-Item,
+	...
+}
+
+RANParameter-LIST ::= SEQUENCE {
+ 	list-of-ranParameter-Structures		SEQUENCE (SIZE(1..maxnoofItemsInList)) OF RANParameter-STRUCTURE,
+ 	...
+}
+
+RANParameter-Value ::= CHOICE {
+	valueInt		INTEGER,
+	valueOctS		OCTET STRING,
+	...
+}
+
+-- *****************************************************
+
+UE-Identity ::= OCTET STRING
+
+RIC-Style-Type ::= INTEGER
+
+RIC-Style-Name ::= PrintableString (SIZE(1..150,...))
+
+RIC-Format-Type ::= INTEGER
+
+RANParameter-ID ::= INTEGER (0..maxnoofAssociatedRANInfo)
+
+RANParameter-Name ::= PrintableString (SIZE(1..150,...))
+
+RIC-ControlAction-ID ::= INTEGER (0..maxnoofControlAction)
+
+RIC-ControlAction-Name ::= PrintableString (SIZE(1..150,...))
+
+maxnoofRICStyles	INTEGER ::= 63
+
+maxnoofAssociatedRANInfo	INTEGER ::= 4294967295
+
+maxnoofParametersInStructure	INTEGER ::= 4294967295
+
+maxnoofItemsInList	INTEGER ::= 4294967295
+
+maxnoofControlAction	INTEGER ::= 65535
+
+E2SM-KPM-EventTriggerDefinition ::= CHOICE {
+	eventDefinition-Format1		E2SM-KPM-EventTriggerDefinition-Format1,
+	...
+}
+
+E2SM-KPM-EventTriggerDefinition-Format1 ::= SEQUENCE {
+	policyTest-List	SEQUENCE (SIZE(1..maxofMessageProtocolTests)) OF Trigger-ConditionIE-Item OPTIONAL,
+	...
+}
+
+Trigger-ConditionIE-Item ::= SEQUENCE{
+	report-Period-IE		RT-Period-IE,
+	...
+}
+
+RT-Period-IE ::= ENUMERATED{ ms10, ms20, ms32, ms40, ms60, ms64, ms70, ms80, ms128, ms160, ms256, ms320, ms512, ms640, ms1024, ms1280, ms2048, ms2560, ms5120, ms10240, ...}
+
+RANcallProcess-ID-string ::= PrintableString(SIZE(1..150,...))
+
+PLMN-Identity ::= OCTET STRING (SIZE(3))
+
+GlobalE2node-ID ::= CHOICE{
+	gNB					GlobalE2node-gNB-ID,
+	en-gNB				GlobalE2node-en-gNB-ID,
+	ng-eNB				GlobalE2node-ng-eNB-ID,
+	eNB					GlobalE2node-eNB-ID,
+	...
+}
+
+GlobalE2node-en-gNB-ID ::= SEQUENCE{
+	global-gNB-ID		GlobalenGNB-ID,
+	...
+}
+GlobalE2node-eNB-ID ::= SEQUENCE{
+	global-eNB-ID		GlobalENB-ID,
+	...
+}
+GlobalE2node-gNB-ID ::= SEQUENCE{
+	global-gNB-ID		GlobalgNB-ID,
+	gNB-CU-UP-ID		GNB-CU-UP-ID	OPTIONAL,
+	gNB-DU-ID			GNB-DU-ID		OPTIONAL,
+	...
+}
+GlobalE2node-ng-eNB-ID ::= SEQUENCE{
+	global-ng-eNB-ID	GlobalngeNB-ID,
+	...
+}
+-- **************************************************************
+-- copied from 3GPP X2AP IEs v15.4.0
+-- note: ie-Extensions removed
+-- **************************************************************
+
+GlobalENB-ID ::= SEQUENCE {
+	pLMN-Identity		PLMN-Identity,
+	eNB-ID				ENB-ID,
+	...
+}
+-- **************************************************************
+-- copied from 3GPP X2AP IEs v15.4.0
+-- Note: to avoid duplicate names with XnAP, GNB-ID renamed ENGNB-ID, GlobalGNB-ID renamed GlobalenGNB-ID
+-- **************************************************************
+GlobalenGNB-ID ::= SEQUENCE {
+	pLMN-Identity		PLMN-Identity,
+	gNB-ID				ENGNB-ID,
+	...
+}
+-- **************************************************************
+-- copied from 3GPP 38.423 v15.5.0 XnAP IEs 
+-- **************************************************************
+GlobalgNB-ID	::= SEQUENCE {
+	plmn-id				PLMN-Identity,
+	gnb-id				GNB-ID-Choice,
+	...
+}
+
+
+-- **************************************************************
+-- copied from 3GPP 38.423 v15.5.0 XnAP IEs 
+-- **************************************************************
+GlobalngeNB-ID	::= SEQUENCE {
+	plmn-id			PLMN-Identity,
+	enb-id			ENB-ID-Choice,
+	...
+}
+
+GNB-ID-Choice ::= CHOICE {
+	gnb-ID					BIT STRING (SIZE(22..32)),
+	...
+}
+
+ENB-ID-Choice ::= CHOICE {
+	enb-ID-macro			BIT STRING (SIZE(20)),
+	enb-ID-shortmacro		BIT STRING (SIZE(18)),
+	enb-ID-longmacro		BIT STRING (SIZE(21)),
+	...
+}
+
+ENB-ID ::= CHOICE {
+	macro-eNB-ID			BIT STRING (SIZE (20)),
+	home-eNB-ID				BIT STRING (SIZE (28)),
+	... ,
+	short-Macro-eNB-ID		BIT STRING (SIZE(18)),
+	long-Macro-eNB-ID		BIT STRING (SIZE(21))
+}
+
+ENGNB-ID ::= CHOICE {
+	gNB-ID	BIT STRING (SIZE (22..32)),
+	...
+}
+
+GNB-CU-UP-ID::= 	INTEGER (0..68719476735)
+GNB-DU-ID::= 		INTEGER (0..68719476735)
+
+-- **************************************************************
+-- copied from 3GPP 38.423 v15.5.0 XnAP IEs 
+-- **************************************************************
+END
+-- ASN1STOP
+

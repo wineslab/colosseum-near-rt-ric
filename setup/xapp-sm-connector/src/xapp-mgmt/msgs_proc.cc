@@ -19,13 +19,18 @@
 /*
  * msgs_proc.cc
  * Created on: 2019
- * Author: Ashwin Shridharan, Shraboni Jana
+ * Author: Ashwin Shridharan, Shraboni Jana, Leonardo Bonati, Andrea Lacava
  */
 
 
 #include "msgs_proc.hpp"
 #include <stdio.h>
 
+extern "C" {
+    #include "E2SM-KPM-IndicationMessage.h"
+    #include "E2SM-KPM-IndicationMessage-Format1.h"
+    #include "RAN-Container.h"
+}
 
 bool XappMsgHandler::encode_subscription_delete_request(unsigned char* buffer, size_t *buf_len){
 
@@ -38,7 +43,7 @@ bool XappMsgHandler::encode_subscription_delete_request(unsigned char* buffer, s
 	  // generate the delete request pdu
 
 	  bool res = e2ap_sub_req_del.encode_e2ap_subscription(&buffer[0], buf_len, sub_helper);
-	  if(! res){
+	  if(!res){
 	    mdclog_write(MDCLOG_ERR, "%s, %d: Error encoding subscription delete request pdu. Reason = %s", __FILE__, __LINE__, e2ap_sub_req_del.get_error().c_str());
 	    return false;
 	  }
@@ -251,6 +256,9 @@ uint8_t procRicIndication(E2AP_PDU_t *e2apMsg, transaction_identifier gnb_id)
    RICindication_t *ricIndication;
    RICaction_ToBeSetup_ItemIEs_t *actionItem;
 
+    // final payload to send to the ML agent
+    std::string payload;
+
    printf("\nE2AP : RIC Indication received");
    ricIndication = &e2apMsg->choice.initiatingMessage->value.choice.RICindication;
 
@@ -262,29 +270,100 @@ uint8_t procRicIndication(E2AP_PDU_t *e2apMsg, transaction_identifier gnb_id)
       {
 				case 28:  // RIC indication type
 				{
-					long ricindicationType = ricIndication->protocolIEs.list.array[idx]-> \
-																		 value.choice.RICindicationType;
-
-					printf("ricindicationType %ld\n", ricindicationType);
-
+					long ricindicationType = ricIndication->protocolIEs.list.array[idx]->value.choice.RICindicationType;
+					printf("RIC IndicationType %ld\n", ricindicationType);
 					break;
 				}
 				case 26:  // RIC indication message
 				{
-					int payload_size = ricIndication->protocolIEs.list.array[idx]-> \
-																		 value.choice.RICindicationMessage.size;
+                     int payload_size = ricIndication->protocolIEs.list.array[idx]->value.choice.RICindicationMessage.size;
+                     char* payload = (char*) calloc(payload_size, sizeof(char));
+                     memcpy(payload, ricIndication->protocolIEs.list.array[idx]->value.choice.RICindicationMessage.buf, payload_size);
 
+                    auto *e2SmIndicationMessage = (E2SM_KPM_IndicationMessage_t *) calloc(1, sizeof(E2SM_KPM_IndicationMessage_t));
+                    ASN_STRUCT_RESET(asn_DEF_E2SM_KPM_IndicationMessage, e2SmIndicationMessage);
 
-					char* payload = (char*) calloc(payload_size, sizeof(char));
-					memcpy(payload, ricIndication->protocolIEs.list.array[idx]-> \
-																		 value.choice.RICindicationMessage.buf, payload_size);
+                    asn_decode(nullptr, ATS_ALIGNED_BASIC_PER, &asn_DEF_E2SM_KPM_IndicationMessage,
+                               (void **) &e2SmIndicationMessage, ricIndication->protocolIEs.list.array[idx]->value.choice.RICindicationMessage.buf,
+                               ricIndication->protocolIEs.list.array[idx]->value.choice.RICindicationMessage.size);
+//                    xer_fprint(stderr, &asn_DEF_E2SM_KPM_IndicationMessage, e2SmIndicationMessage);
 
-					printf("Payload %s\n", payload);
+                    if (e2SmIndicationMessage->present == E2SM_KPM_IndicationMessage_PR_indicationMessage_Format1) {
+                        mdclog_write(MDCLOG_INFO, "Format 1 present\n");
 
-					// send payload to agent
-					std::string agent_ip = find_agent_ip_from_gnb(gnb_id);
-					send_socket(payload, agent_ip);
+                        E2SM_KPM_IndicationMessage_Format1_t *e2SmIndicationMessageFormat1 = e2SmIndicationMessage->choice.indicationMessage_Format1;
 
+                        // extract RAN container, which is where we put our payload
+                        vector<uint8_t*> serving_cell_payload_vec;
+                        vector<uint8_t*> neighbor_cell_payload_vec;
+                        for (size_t i = 0; i < e2SmIndicationMessageFormat1->pm_Containers.list.count; i++) {
+                            PM_Containers_List *ranPmContainerList = e2SmIndicationMessageFormat1->pm_Containers.list.array[i];
+                            RAN_Container *ranco = ranPmContainerList->theRANContainer;
+                            xer_fprint(stderr, &asn_DEF_RAN_Container, ranco);
+
+//                            CU_CP_Usage_Report_Per_UE_t *o_cu_cp_ue = &ranco->reportContainer.choice.oCU_CP_UE;
+//
+//                            for (int j = 0; j < o_cu_cp_ue->cellResourceReportList.list.count; j++) {
+//                                CU_CP_Usage_Report_CellResourceReportItem_t *cellResourceReportItem = o_cu_cp_ue->cellResourceReportList.list.array[j];
+//                                for (int z = 0; z < cellResourceReportItem->ueResourceReportList.list.count; z++) {
+//                                    OCTET_STRING_t *serving_cell = cellResourceReportItem->ueResourceReportList.list.array[z]->serving_Cell_RF_Type;
+//                                    OCTET_STRING_t *neighbor_cell = cellResourceReportItem->ueResourceReportList.list.array[z]->neighbor_Cell_RF;
+//
+//                                    mdclog_write(MDCLOG_INFO, "Received serving_Cell_RF_Type: %s, neighbor_Cell_RF: %s\n", serving_cell->buf, neighbor_cell->buf);
+//                                    serving_cell_payload_vec.push_back(serving_cell->buf);
+//                                    neighbor_cell_payload_vec.push_back(neighbor_cell->buf);
+//                                }
+//                            }
+                        }
+
+//                        // combine content of vectors, there should be a single entry in the vector anyway
+//                        std::ostringstream serving_cell_payload_oss;
+//                        std::copy(serving_cell_payload_vec.begin(), serving_cell_payload_vec.end() - 1, std::ostream_iterator<uint8_t*>(serving_cell_payload_oss, ", "));
+//                        serving_cell_payload_oss << serving_cell_payload_vec.back();
+//                        std::string serving_cell_payload = serving_cell_payload_oss.str();
+//
+//                        std::ostringstream neighbor_cell_payload_oss;
+//                        std::copy(neighbor_cell_payload_vec.begin(), neighbor_cell_payload_vec.end() - 1, std::ostream_iterator<uint8_t*>(neighbor_cell_payload_oss, ", "));
+//                        neighbor_cell_payload_oss << neighbor_cell_payload_vec.back();
+//                        std::string neighbor_cell_payload = neighbor_cell_payload_oss.str();
+//
+//                        mdclog_write(MDCLOG_INFO, "String conversion: serving_Cell_RF_Type %s, neighbor_Cell_RF: %s\n", serving_cell_payload.c_str(), neighbor_cell_payload.c_str());
+//
+//                        // assemble final payload
+//                        if (serving_cell_payload.length() > 0 && neighbor_cell_payload.length() > 0) {
+//                            payload = serving_cell_payload + ", " + neighbor_cell_payload;
+//                        }
+//                        else if (serving_cell_payload.length() > 0 && neighbor_cell_payload.length() == 0) {
+//                            payload = serving_cell_payload;
+//                        }
+//                        else if (serving_cell_payload.length() == 0 && neighbor_cell_payload.length() > 0) {
+//                            payload = neighbor_cell_payload;
+//                        }
+//                        else {
+//                            payload = "";
+//                        }
+//
+//                        mdclog_write(MDCLOG_INFO, "Payload from RIC Indication message: %s\n", payload.c_str());
+                    }
+                    else {
+                        mdclog_write(MDCLOG_INFO, "No payload received in RIC Indication message (or was unable to decode received payload\n");
+                    }
+
+//                    add_gnb_to_vector_unique(gnb_id);
+//
+//                    if (payload.length() > 0) {
+//                        // add gnb id to payload
+//                        payload += "\n{\"gnb_id\": \"" + std::string(reinterpret_cast<char const*>(gnb_id)) + "\"}";
+//
+//                        mdclog_write(MDCLOG_INFO, "Sending RIC Indication message to agent\n");
+//                        send_socket(payload.c_str());
+//                    }
+//                    else if (payload.length() <= 0) {
+//                        mdclog_write(MDCLOG_INFO, "Received empty payload\n");
+//                    }
+//                    else {
+//                        mdclog_write(MDCLOG_INFO, "Returned empty agent IP\n");
+//                    }
 					break;
 				}
       }

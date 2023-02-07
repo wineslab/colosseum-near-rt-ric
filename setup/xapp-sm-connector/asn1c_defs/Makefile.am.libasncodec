@@ -1,0 +1,344 @@
+ASN_MODULE_SRCS=	\
+	./Criticality.c	\
+	./Presence.c	\
+	./ProcedureCode.c	\
+	./ProtocolIE-ID.c	\
+	./TriggeringMessage.c	\
+	./E2SM-KPM-RANFunctionDefinition.c	\
+	./RIC-ReportStyle-Item.c	\
+	./E2SM-KPM-ActionDefinition.c	\
+	./E2SM-KPM-ActionDefinition-Format1.c	\
+	./E2SM-KPM-IndicationHeader.c	\
+	./E2SM-KPM-IndicationHeader-Format1.c	\
+	./E2SM-KPM-IndicationMessage.c	\
+	./E2SM-KPM-IndicationMessage-Format1.c	\
+	./PM-Containers-Item.c	\
+	./PerUE-PM-Item.c	\
+	./PM-Info-Item.c	\
+	./PF-Container.c	\
+	./ODU-PF-Container.c	\
+	./CellResourceReportListItem.c	\
+	./ServedPlmnPerCellListItem.c	\
+	./FGC-DU-PM-Container.c	\
+	./SlicePerPlmnPerCellListItem.c	\
+	./FQIPERSlicesPerPlmnPerCellListItem.c	\
+	./EPC-DU-PM-Container.c	\
+	./PerQCIReportListItem.c	\
+	./OCUCP-PF-Container.c	\
+	./OCUUP-PF-Container.c	\
+	./PF-ContainerListItem.c	\
+	./CUUPMeasurement-Container.c	\
+	./PlmnID-Item.c	\
+	./FGC-CUUP-PM-Format.c	\
+	./SliceToReportListItem.c	\
+	./FQIPERSlicesPerPlmnListItem.c	\
+	./EPC-CUUP-PM-Format.c	\
+	./PerQCIReportListItemFormat.c	\
+	./MeasurementValue.c	\
+	./L3-RRC-Measurements.c	\
+	./RRCEvent.c	\
+	./ServingCellMeasurements.c	\
+	./MeasResultServMOList.c	\
+	./MeasResultServMO.c	\
+	./MeasResultNR.c	\
+	./MeasResultListEUTRA.c	\
+	./MeasResultEUTRA.c	\
+	./MeasResultPCell.c	\
+	./MeasResultNeighCells.c	\
+	./MeasResultListNR.c	\
+	./PhysCellId.c	\
+	./ServCellIndex.c	\
+	./MeasQuantityResults.c	\
+	./MeasQuantityResultsEUTRA.c	\
+	./RSRP-RangeEUTRA.c	\
+	./RSRQ-RangeEUTRA.c	\
+	./SINR-RangeEUTRA.c	\
+	./ResultsPerSSB-IndexList.c	\
+	./ResultsPerSSB-Index.c	\
+	./ResultsPerCSI-RS-IndexList.c	\
+	./ResultsPerCSI-RS-Index.c	\
+	./SSB-Index.c	\
+	./CSI-RS-Index.c	\
+	./RSRP-Range.c	\
+	./RSRQ-Range.c	\
+	./SINR-Range.c	\
+	./TimeStamp.c	\
+	./CellObjectID.c	\
+	./MeasurementInfoList.c	\
+	./MeasurementInfoItem.c	\
+	./MeasurementType.c	\
+	./NRCGI.c	\
+	./NRCellIdentity.c	\
+	./S-NSSAI.c	\
+	./MeasurementTypeName.c	\
+	./MeasurementTypeID.c	\
+	./FiveQI.c	\
+	./QCI.c	\
+	./NI-Type.c	\
+	./RAN-Container.c	\
+	./E2SM-RC-RANFunctionDefinition.c	\
+	./RANfunction-Name.c	\
+	./RIC-EventTriggerStyle-Item.c	\
+	./RIC-ControlStyle-Item.c	\
+	./RIC-ControlAction-Item.c	\
+	./RAN-ControlParameter-Item.c	\
+	./E2SM-RC-ControlHeader.c	\
+	./E2SM-RC-ControlHeader-Format1.c	\
+	./E2SM-RC-ControlMessage.c	\
+	./E2SM-RC-ControlMessage-Format1.c	\
+	./RANParameter-Item.c	\
+	./RANParameter-ValueType.c	\
+	./RANParameter-ELEMENT.c	\
+	./RANParameter-STRUCTURE.c	\
+	./RANParameter-LIST.c	\
+	./RANParameter-Value.c	\
+	./UE-Identity.c	\
+	./RIC-Style-Type.c	\
+	./RIC-Style-Name.c	\
+	./RIC-Format-Type.c	\
+	./RANParameter-ID.c	\
+	./RANParameter-Name.c	\
+	./RIC-ControlAction-ID.c	\
+	./RIC-ControlAction-Name.c	\
+	./E2SM-KPM-EventTriggerDefinition.c	\
+	./E2SM-KPM-EventTriggerDefinition-Format1.c	\
+	./Trigger-ConditionIE-Item.c	\
+	./RT-Period-IE.c	\
+	./RANcallProcess-ID-string.c	\
+	./PLMN-Identity.c	\
+	./GlobalE2node-ID.c	\
+	./GlobalE2node-en-gNB-ID.c	\
+	./GlobalE2node-eNB-ID.c	\
+	./GlobalE2node-gNB-ID.c	\
+	./GlobalE2node-ng-eNB-ID.c	\
+	./GlobalENB-ID.c	\
+	./GlobalenGNB-ID.c	\
+	./GlobalgNB-ID.c	\
+	./GlobalngeNB-ID.c	\
+	./GNB-ID-Choice.c	\
+	./ENB-ID-Choice.c	\
+	./ENB-ID.c	\
+	./ENGNB-ID.c	\
+	./GNB-CU-UP-ID.c	\
+	./GNB-DU-ID.c
+
+ASN_MODULE_HDRS=	\
+	./Criticality.h	\
+	./Presence.h	\
+	./ProcedureCode.h	\
+	./ProtocolIE-ID.h	\
+	./TriggeringMessage.h	\
+	./E2SM-KPM-RANFunctionDefinition.h	\
+	./RIC-ReportStyle-Item.h	\
+	./E2SM-KPM-ActionDefinition.h	\
+	./E2SM-KPM-ActionDefinition-Format1.h	\
+	./E2SM-KPM-IndicationHeader.h	\
+	./E2SM-KPM-IndicationHeader-Format1.h	\
+	./E2SM-KPM-IndicationMessage.h	\
+	./E2SM-KPM-IndicationMessage-Format1.h	\
+	./PM-Containers-Item.h	\
+	./PerUE-PM-Item.h	\
+	./PM-Info-Item.h	\
+	./PF-Container.h	\
+	./ODU-PF-Container.h	\
+	./CellResourceReportListItem.h	\
+	./ServedPlmnPerCellListItem.h	\
+	./FGC-DU-PM-Container.h	\
+	./SlicePerPlmnPerCellListItem.h	\
+	./FQIPERSlicesPerPlmnPerCellListItem.h	\
+	./EPC-DU-PM-Container.h	\
+	./PerQCIReportListItem.h	\
+	./OCUCP-PF-Container.h	\
+	./OCUUP-PF-Container.h	\
+	./PF-ContainerListItem.h	\
+	./CUUPMeasurement-Container.h	\
+	./PlmnID-Item.h	\
+	./FGC-CUUP-PM-Format.h	\
+	./SliceToReportListItem.h	\
+	./FQIPERSlicesPerPlmnListItem.h	\
+	./EPC-CUUP-PM-Format.h	\
+	./PerQCIReportListItemFormat.h	\
+	./MeasurementValue.h	\
+	./L3-RRC-Measurements.h	\
+	./RRCEvent.h	\
+	./ServingCellMeasurements.h	\
+	./MeasResultServMOList.h	\
+	./MeasResultServMO.h	\
+	./MeasResultNR.h	\
+	./MeasResultListEUTRA.h	\
+	./MeasResultEUTRA.h	\
+	./MeasResultPCell.h	\
+	./MeasResultNeighCells.h	\
+	./MeasResultListNR.h	\
+	./PhysCellId.h	\
+	./ServCellIndex.h	\
+	./MeasQuantityResults.h	\
+	./MeasQuantityResultsEUTRA.h	\
+	./RSRP-RangeEUTRA.h	\
+	./RSRQ-RangeEUTRA.h	\
+	./SINR-RangeEUTRA.h	\
+	./ResultsPerSSB-IndexList.h	\
+	./ResultsPerSSB-Index.h	\
+	./ResultsPerCSI-RS-IndexList.h	\
+	./ResultsPerCSI-RS-Index.h	\
+	./SSB-Index.h	\
+	./CSI-RS-Index.h	\
+	./RSRP-Range.h	\
+	./RSRQ-Range.h	\
+	./SINR-Range.h	\
+	./TimeStamp.h	\
+	./CellObjectID.h	\
+	./MeasurementInfoList.h	\
+	./MeasurementInfoItem.h	\
+	./MeasurementType.h	\
+	./NRCGI.h	\
+	./NRCellIdentity.h	\
+	./S-NSSAI.h	\
+	./MeasurementTypeName.h	\
+	./MeasurementTypeID.h	\
+	./FiveQI.h	\
+	./QCI.h	\
+	./NI-Type.h	\
+	./RAN-Container.h	\
+	./E2SM-RC-RANFunctionDefinition.h	\
+	./RANfunction-Name.h	\
+	./RIC-EventTriggerStyle-Item.h	\
+	./RIC-ControlStyle-Item.h	\
+	./RIC-ControlAction-Item.h	\
+	./RAN-ControlParameter-Item.h	\
+	./E2SM-RC-ControlHeader.h	\
+	./E2SM-RC-ControlHeader-Format1.h	\
+	./E2SM-RC-ControlMessage.h	\
+	./E2SM-RC-ControlMessage-Format1.h	\
+	./RANParameter-Item.h	\
+	./RANParameter-ValueType.h	\
+	./RANParameter-ELEMENT.h	\
+	./RANParameter-STRUCTURE.h	\
+	./RANParameter-LIST.h	\
+	./RANParameter-Value.h	\
+	./UE-Identity.h	\
+	./RIC-Style-Type.h	\
+	./RIC-Style-Name.h	\
+	./RIC-Format-Type.h	\
+	./RANParameter-ID.h	\
+	./RANParameter-Name.h	\
+	./RIC-ControlAction-ID.h	\
+	./RIC-ControlAction-Name.h	\
+	./E2SM-KPM-EventTriggerDefinition.h	\
+	./E2SM-KPM-EventTriggerDefinition-Format1.h	\
+	./Trigger-ConditionIE-Item.h	\
+	./RT-Period-IE.h	\
+	./RANcallProcess-ID-string.h	\
+	./PLMN-Identity.h	\
+	./GlobalE2node-ID.h	\
+	./GlobalE2node-en-gNB-ID.h	\
+	./GlobalE2node-eNB-ID.h	\
+	./GlobalE2node-gNB-ID.h	\
+	./GlobalE2node-ng-eNB-ID.h	\
+	./GlobalENB-ID.h	\
+	./GlobalenGNB-ID.h	\
+	./GlobalgNB-ID.h	\
+	./GlobalngeNB-ID.h	\
+	./GNB-ID-Choice.h	\
+	./ENB-ID-Choice.h	\
+	./ENB-ID.h	\
+	./ENGNB-ID.h	\
+	./GNB-CU-UP-ID.h	\
+	./GNB-DU-ID.h
+
+ASN_MODULE_HDRS+=./OPEN_TYPE.h
+ASN_MODULE_SRCS+=./OPEN_TYPE.c
+ASN_MODULE_HDRS+=./constr_CHOICE.h
+ASN_MODULE_HDRS+=./BOOLEAN.h
+ASN_MODULE_SRCS+=./BOOLEAN.c
+ASN_MODULE_HDRS+=./INTEGER.h
+ASN_MODULE_SRCS+=./INTEGER.c
+ASN_MODULE_HDRS+=./NULL.h
+ASN_MODULE_SRCS+=./NULL.c
+ASN_MODULE_HDRS+=./NativeEnumerated.h
+ASN_MODULE_SRCS+=./NativeEnumerated.c
+ASN_MODULE_HDRS+=./NativeInteger.h
+ASN_MODULE_SRCS+=./NativeInteger.c
+ASN_MODULE_HDRS+=./NativeReal.h
+ASN_MODULE_SRCS+=./NativeReal.c
+ASN_MODULE_HDRS+=./REAL.h
+ASN_MODULE_HDRS+=./PrintableString.h
+ASN_MODULE_SRCS+=./PrintableString.c
+ASN_MODULE_HDRS+=./OCTET_STRING.h
+ASN_MODULE_SRCS+=./REAL.c
+ASN_MODULE_HDRS+=./asn_SEQUENCE_OF.h
+ASN_MODULE_SRCS+=./asn_SEQUENCE_OF.c
+ASN_MODULE_HDRS+=./asn_SET_OF.h
+ASN_MODULE_SRCS+=./asn_SET_OF.c
+ASN_MODULE_SRCS+=./constr_CHOICE.c
+ASN_MODULE_HDRS+=./constr_SEQUENCE.h
+ASN_MODULE_SRCS+=./constr_SEQUENCE.c
+ASN_MODULE_HDRS+=./constr_SEQUENCE_OF.h
+ASN_MODULE_SRCS+=./constr_SEQUENCE_OF.c
+ASN_MODULE_HDRS+=./constr_SET_OF.h
+ASN_MODULE_SRCS+=./constr_SET_OF.c
+ASN_MODULE_HDRS+=./asn_application.h
+ASN_MODULE_SRCS+=./asn_application.c
+ASN_MODULE_HDRS+=./asn_ioc.h
+ASN_MODULE_HDRS+=./asn_system.h
+ASN_MODULE_HDRS+=./asn_codecs.h
+ASN_MODULE_HDRS+=./asn_internal.h
+ASN_MODULE_SRCS+=./asn_internal.c
+ASN_MODULE_HDRS+=./asn_random_fill.h
+ASN_MODULE_SRCS+=./asn_random_fill.c
+ASN_MODULE_HDRS+=./asn_bit_data.h
+ASN_MODULE_SRCS+=./asn_bit_data.c
+ASN_MODULE_SRCS+=./OCTET_STRING.c
+ASN_MODULE_HDRS+=./BIT_STRING.h
+ASN_MODULE_SRCS+=./BIT_STRING.c
+ASN_MODULE_SRCS+=./asn_codecs_prim.c
+ASN_MODULE_HDRS+=./asn_codecs_prim.h
+ASN_MODULE_HDRS+=./ber_tlv_length.h
+ASN_MODULE_SRCS+=./ber_tlv_length.c
+ASN_MODULE_HDRS+=./ber_tlv_tag.h
+ASN_MODULE_SRCS+=./ber_tlv_tag.c
+ASN_MODULE_HDRS+=./ber_decoder.h
+ASN_MODULE_SRCS+=./ber_decoder.c
+ASN_MODULE_HDRS+=./der_encoder.h
+ASN_MODULE_SRCS+=./der_encoder.c
+ASN_MODULE_HDRS+=./constr_TYPE.h
+ASN_MODULE_SRCS+=./constr_TYPE.c
+ASN_MODULE_HDRS+=./constraints.h
+ASN_MODULE_SRCS+=./constraints.c
+ASN_MODULE_HDRS+=./xer_support.h
+ASN_MODULE_SRCS+=./xer_support.c
+ASN_MODULE_HDRS+=./xer_decoder.h
+ASN_MODULE_SRCS+=./xer_decoder.c
+ASN_MODULE_HDRS+=./xer_encoder.h
+ASN_MODULE_SRCS+=./xer_encoder.c
+ASN_MODULE_HDRS+=./per_support.h
+ASN_MODULE_SRCS+=./per_support.c
+ASN_MODULE_HDRS+=./per_decoder.h
+ASN_MODULE_SRCS+=./per_decoder.c
+ASN_MODULE_HDRS+=./per_encoder.h
+ASN_MODULE_SRCS+=./per_encoder.c
+ASN_MODULE_HDRS+=./per_opentype.h
+ASN_MODULE_SRCS+=./per_opentype.c
+ASN_MODULE_HDRS+=./oer_decoder.h
+ASN_MODULE_HDRS+=./oer_encoder.h
+ASN_MODULE_HDRS+=./oer_support.h
+ASN_MODULE_SRCS+=./oer_decoder.c
+ASN_MODULE_SRCS+=./oer_encoder.c
+ASN_MODULE_SRCS+=./oer_support.c
+ASN_MODULE_SRCS+=./OPEN_TYPE_oer.c
+ASN_MODULE_SRCS+=./INTEGER_oer.c
+ASN_MODULE_SRCS+=./BIT_STRING_oer.c
+ASN_MODULE_SRCS+=./OCTET_STRING_oer.c
+ASN_MODULE_SRCS+=./NativeInteger_oer.c
+ASN_MODULE_SRCS+=./NativeEnumerated_oer.c
+ASN_MODULE_SRCS+=./constr_CHOICE_oer.c
+ASN_MODULE_SRCS+=./constr_SEQUENCE_oer.c
+ASN_MODULE_SRCS+=./constr_SET_OF_oer.c
+
+ASN_MODULE_CFLAGS=
+
+lib_LTLIBRARIES+=libasncodec.la
+libasncodec_la_SOURCES=$(ASN_MODULE_SRCS) $(ASN_MODULE_HDRS)
+libasncodec_la_CPPFLAGS=-I$(top_srcdir)/./
+libasncodec_la_CFLAGS=$(ASN_MODULE_CFLAGS)
+libasncodec_la_LDFLAGS=-lm

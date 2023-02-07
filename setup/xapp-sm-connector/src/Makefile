@@ -18,15 +18,15 @@ RNIB_LIBS:= -pthread /usr/local/include/rnib/rnibreader.a
 ######## Keep include dirs separate so we have transparency
 
 
-BASEFLAGS=  -Wall -std=c++14 $(CLOGFLAGS) 
-C_BASEFLAGS= -Wall $(CLOGFLAGS) -DASN_DISABLE_OER_SUPPORT
+BASEFLAGS= -Wall -std=c++14 $(CLOGFLAGS)
+C_BASEFLAGS= -Wall $(CLOGFLAGS)
 
 XAPPFLAGS= -I./
 HWFLAGS= -I./
 UTILFLAGS= -I$(UTILSRC)
 MSGFLAGS= -I$(MSGSRC)
 
-ASNFLAGS=-I$(ASNSRC) -DASN_DISABLE_OER_SUPPORT
+ASNFLAGS= -I$(ASNSRC)
 E2APFLAGS = -I$(E2APSRC)
 E2SMFLAGS = -I$(E2SMSRC)
 
@@ -48,7 +48,7 @@ ASN1C_SRC= $(wildcard $(ASNSRC)/*.c)
 ##############Objects
 UTIL_OBJ=${UTIL_SRC:.cc=.o}
 XAPP_OBJ=${XAPP_SRC:.cc=.o}
-HWXAPP_OBJ= ${HWXAPP_SRC:.cc=.o} 
+HWXAPP_OBJ=${HWXAPP_SRC:.cc=.o}
 MSG_OBJ= ${MSG_SRC:.cc=.o}
 
 E2AP_OBJ = $(E2AP_SRC:.cc=.o)
@@ -76,4 +76,4 @@ install: hw_xapp_main
 	install  -D hw_xapp_main  /usr/local/bin/hw_xapp_main
 
 clean:
-	-rm *.o $(ASNSRC)/*.o $(E2APSRC)/*.o $(UTILSRC)/*.o $(E2SMSRC)/*.o  $(MSGSRC)/*.o $(SRC)/*.o hw_xapp_main 
+	rm *.o $(ASNSRC)/*.o $(E2APSRC)/*.o $(UTILSRC)/*.o $(E2SMSRC)/*.o  $(MSGSRC)/*.o $(SRC)/*.o hw_xapp_main

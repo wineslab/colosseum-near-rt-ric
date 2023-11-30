@@ -271,7 +271,7 @@ uint8_t procRicIndication(E2AP_PDU_t *e2apMsg, transaction_identifier gnb_id)
 				}
 				case 26:  // RIC indication message
 				{
-					int payload_size = ricIndication->protocolIEs.list.array[idx]-> \
+					size_t payload_size = ricIndication->protocolIEs.list.array[idx]-> \
 																		 value.choice.RICindicationMessage.size;
 
 
@@ -283,7 +283,7 @@ uint8_t procRicIndication(E2AP_PDU_t *e2apMsg, transaction_identifier gnb_id)
 
 					// send payload to agent
 					std::string agent_ip = find_agent_ip_from_gnb(gnb_id);
-					send_socket(payload, agent_ip);
+					send_socket(payload, payload_size, agent_ip);
 
 					break;
 				}

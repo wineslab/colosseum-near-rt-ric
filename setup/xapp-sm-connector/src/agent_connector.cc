@@ -126,7 +126,7 @@ int send_socket(char* buf, size_t payload_size, std::string dest_ip) {
 
   // const size_t max_size = 512;
   // char buf[max_size] = "Hello, Server!";  // store the data in a buffer
-  int sent_size = send(control_sckfd ,buf, payload_size, 0);
+  int sent_size = send(control_sckfd, buf, payload_size, 0);
 
   if(sent_size < 0) { // the send returns a size of -1 in case of errors
       std::cout <<  "ERROR: SEND to agent " << dest_ip << std::endl;

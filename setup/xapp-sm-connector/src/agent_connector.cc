@@ -104,7 +104,7 @@ std::string find_agent_ip_from_gnb(unsigned char* gnb_id_trans) {
 
 
 // send through socket
-int send_socket(char* buf, std::string dest_ip) {
+int send_socket(char* buf, size_t payload_size, std::string dest_ip) {
 
   int control_sckfd = -1;
 
@@ -126,8 +126,7 @@ int send_socket(char* buf, std::string dest_ip) {
 
   // const size_t max_size = 512;
   // char buf[max_size] = "Hello, Server!";  // store the data in a buffer
-  size_t data_size = strlen(buf);
-  int sent_size = send(control_sckfd ,buf, data_size, 0);
+  int sent_size = send(control_sckfd, buf, payload_size, 0);
 
   if(sent_size < 0) { // the send returns a size of -1 in case of errors
       std::cout <<  "ERROR: SEND to agent " << dest_ip << std::endl;

@@ -28,6 +28,7 @@
 #define SRC_XAPP_HPP_
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <memory>
 #include <csignal>

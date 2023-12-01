@@ -14,17 +14,6 @@ do
     esac
 done
 
-# get RIC interface from cli arguments
-if [ $# -eq 0 ] || [ "$import" = false ] ; then
-    RIC_INTERFACE="col0"
-else
-    if [ "$arena" = true ]; then
-        RIC_INTERFACE="brric"
-    else
-        RIC_INTERFACE=$1
-    fi
-fi
-
 export SRC=`dirname $0`
 . $SRC/setup-lib.sh
 
@@ -174,9 +163,6 @@ sctp-port=$E2TERM_SCTP_PORT
 EOF
 fi
  E2TERM_CONFIG_BIND="--mount type=bind,source=$E2TERMCONFFILE,destination=/opt/e2/config/config.conf,ro"
-
-export RIC_IP=`ifconfig ${RIC_INTERFACE} | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*'`
-
 
 if [ "$arena" = true ]; then
     echo 'Starting local setup'

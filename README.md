@@ -6,7 +6,7 @@ The repository also features a sample xApp, which connects to the [SCOPE](https:
 
 If you use this software, please reference the following paper: 
 
-> M. Polese, L. Bonati, S. D'Oro, S. Basagni, T. Melodia, "ColoRAN: Design and Testing of Open RAN Intelligence on Large-scale Experimental Platforms," arXiv 2112.09559 [cs.NI], December 2021. [bibtex](https://ece.northeastern.edu/wineslab/wines_bibtex/polese2021coloran.txt) [pdf](https://arxiv.org/pdf/2112.09559.pdf)
+> M. Polese, L. Bonati, S. D'Oro, S. Basagni, T. Melodia, "ColoRAN: Design and Testing of Open RAN Intelligence on Large-scale Experimental Platforms," arXiv 2112.09559 [cs.NI], December 2021. [[pdf]](https://arxiv.org/pdf/2112.09559.pdf)
 
 This work was partially supported by the U.S. National Science Foundation under Grants CNS-1923789 and NSF CNS-1925601, and the U.S. Office of Naval Research under Grant N00014-20-1-2132.
 
